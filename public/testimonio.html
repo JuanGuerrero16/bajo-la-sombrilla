@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <title>Comparte tu testimonio · Bajo la sombrilla</title>
+
+    <!-- Fuentes -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Enlace de accesibilidad -->
+    <a class="skip" href="#main">
+        Saltar al contenido
+    </a>
+
+    <!-- ==================== ENCABEZADO ==================== -->
+    <header>
+        <div class="wrap nav">
+
+            <a
+                class="logo"
+                href="Bajo_la_sombrilla.html"
+                aria-label="Bajo la sombrilla, inicio"
+            >
+                <img
+                    class="logo-img"
+                    src="logo_3_transparente.png"
+                    alt=""
+                    width="46"
+                    height="39"
+                >
+                BAJO LA SOMBRILLA
+            </a>
+
+            <a
+                class="btn sm alt"
+                href="Bajo_la_sombrilla.html"
+            >
+                VOLVER AL INICIO
+            </a>
+
+        </div>
+    </header>
+
+    <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+    <main id="main">
+
+        <section class="auth">
+            <div class="wrap">
+
+                <h1>Comparte tu testimonio</h1>
+
+                <p class="intro" id="intro">
+                    Tu experiencia puede acompañar a otras mujeres.
+                    Tú decides cómo aparecer.
+                </p>
+
+                <!-- Estado de la sesión -->
+                <div
+                    class="notice"
+                    id="estado"
+                    role="status"
+                ></div>
+
+                <!-- ==================== FORMULARIO ==================== -->
+                <form id="f" novalidate>
+
+                    <!-- Forma de publicación -->
+                    <fieldset>
+                        <legend>¿Cómo quieres aparecer?</legend>
+
+                        <div
+                            class="pass-opts"
+                            id="como"
+                        ></div>
+                    </fieldset>
+
+                    <!-- Campo de seudónimo -->
+                    <div id="pseudoBox">
+
+                        <label for="ps">
+                            Seudónimo
+                            <span class="hint">(opcional)</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="ps"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                    <!-- Áreas de interés -->
+                    <fieldset>
+
+                        <legend>
+                            Área de interés
+                            <span class="hint">(opcional)</span>
+                        </legend>
+
+                        <div
+                            class="opts"
+                            id="areas"
+                        ></div>
+
+                    </fieldset>
+
+                    <!-- Testimonio -->
+                    <div>
+
+                        <label for="tx">
+                            Tu testimonio
+                        </label>
+
+                        <textarea
+                            id="tx"
+                            aria-describedby="e"
+                        ></textarea>
+
+                        <!-- Mensajes de validación -->
+                        <div
+                            class="err"
+                            id="e"
+                            role="alert"
+                        ></div>
+
+                    </div>
+
+                    <!-- Aviso de privacidad -->
+                    <p class="notice">
+                        Evita escribir nombres de otras personas,
+                        direcciones o datos que te identifiquen
+                        si prefieres el anonimato.
+                    </p>
+
+                    <!-- Envío -->
+                    <div>
+                        <button
+                            class="btn"
+                            type="submit"
+                        >
+                            ENVIAR TESTIMONIO
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- ==================== CONFIRMACIÓN ==================== -->
+                <div
+                    id="ok"
+                    role="status"
+                    tabindex="-1"
+                >
+                    <strong>Gracias por compartir.</strong>
+
+                    Tu testimonio fue recibido. El equipo lo revisará antes de publicarlo en “Voces”.
+
+                    <p>
+                        <a
+                            class="btn sm alt"
+                            href="Bajo_la_sombrilla.html#voces"
+                        >
+                            VOLVER A VOCES
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== PIE DE PÁGINA ==================== -->
+    <footer>
+        <div class="wrap">
+
+            <h2>BAJO LA SOMBRILLA</h2>
+
+            <p>
+                Un espacio para mujeres que construyen nuevos caminos
+                después de las rejas.
+            </p>
+
+            <p>
+                <strong>
+                    Proyecto académico de Terapia Ocupacional
+                </strong>
+            </p>
+
+        </div>
+    </footer>
+
+    <!-- Funciones de autenticación -->
+    <script src="auth.js"></script>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // Obtener la sesión actual.
+        const ses = Sesion.get();
+
+        // Confirmar con el servidor que la sesión sigue vigente;
+        // si cambió (por ejemplo, venció), se recarga la página.
+        Sesion.sincronizar().then((actual) => {
+            const antes = ses ? ses.nombre : null;
+            const ahora = actual ? actual.nombre : null;
+
+            if (antes !== ahora) location.reload();
+        });
+
+        const como = document.getElementById('como');
+        const estado = document.getElementById('estado');
+        const pseudoBox = document.getElementById('pseudoBox');
+        const formulario = document.getElementById('f');
+
+        // Opciones para elegir cómo aparecer.
+        const modos = ses
+            ? [
+                ['anonimo', 'De forma anónima'],
+                ['seudonimo', 'Con un seudónimo'],
+                [
+                    'nombre',
+                    'Con mi nombre de cuenta (' + ses.nombre + ')'
+                ]
+            ]
+            : [
+                ['anonimo', 'De forma anónima']
+            ];
+
+        // Crear las opciones de publicación.
+        modos.forEach(([valor, texto], indice) => {
+            const etiqueta = document.createElement('label');
+            const radio = document.createElement('input');
+
+            radio.type = 'radio';
+            radio.name = 'como';
+            radio.value = valor;
+            radio.checked = indice === 0;
+
+            etiqueta.appendChild(radio);
+            etiqueta.appendChild(
+                document.createTextNode(' ' + texto)
+            );
+
+            como.appendChild(etiqueta);
+        });
+
+        // Mostrar el estado de la sesión.
+        if (ses) {
+
+            estado.innerHTML = `
+                Sesión iniciada como
+                <strong></strong>.
+                Puedes elegir cómo aparecer.
+                <a href="#" id="salir">Cerrar sesión</a>
+            `;
+
+            estado.querySelector('strong').textContent = ses.nombre;
+
+            document.getElementById('salir').onclick = async (ev) => {
+                ev.preventDefault();
+
+                await Sesion.cerrar();
+                location.reload();
+            };
+
+        } else {
+
+            estado.innerHTML = `
+                Estás compartiendo
+                <strong>sin cuenta</strong>, así que tu testimonio
+                será anónimo.
+
+                Si quieres aparecer con tu nombre o seudónimo,
+                <a href="login.html?next=testimonio.html">
+                    inicia sesión
+                </a>
+                o
+                <a href="registro.html?next=testimonio.html">
+                    regístrate
+                </a>.
+            `;
+
+        }
+
+        // Mostrar u ocultar el campo del seudónimo.
+        const actualizarSeudonimo = () => {
+            const seleccion = document.querySelector(
+                '[name="como"]:checked'
+            );
+
+            if (!seleccion) {
+                pseudoBox.style.display = 'none';
+                return;
+            }
+
+            pseudoBox.style.display =
+                seleccion.value === 'seudonimo' ? '' : 'none';
+        };
+
+        // Estado inicial del campo.
+        actualizarSeudonimo();
+
+        // Actualizar cuando cambie la selección.
+        como.addEventListener(
+            'change',
+            actualizarSeudonimo
+        );
+
+        // Opciones de áreas de interés.
+        const areasInteres = [
+            'Trabajo',
+            'Educación',
+            'Emprendimiento',
+            'Familia',
+            'Salud',
+            'Comunidad',
+            'Recreación',
+            'Otro'
+        ];
+
+        // Crear las casillas de áreas.
+        const contenedorAreas = document.getElementById('areas');
+
+        areasInteres.forEach((area) => {
+            const etiqueta = document.createElement('label');
+            const casilla = document.createElement('input');
+
+            casilla.type = 'checkbox';
+            casilla.value = area;
+
+            etiqueta.appendChild(casilla);
+            etiqueta.appendChild(
+                document.createTextNode(' ' + area)
+            );
+
+            contenedorAreas.appendChild(etiqueta);
+        });
+
+        // Validar y enviar el testimonio.
+        formulario.onsubmit = async (ev) => {
+            ev.preventDefault();
+
+            const tx = document.getElementById('tx');
+            const error = document.getElementById('e');
+            const boton = formulario.querySelector('button[type="submit"]');
+
+            // Comprobar que se haya escrito un testimonio.
+            if (!tx.value.trim()) {
+                return marcarError(
+                    tx,
+                    error,
+                    'Escribe tu testimonio para poder enviarlo.'
+                );
+            }
+
+            // Limpiar mensajes de error.
+            error.textContent = '';
+            tx.removeAttribute('aria-invalid');
+
+            const modo = document.querySelector('[name="como"]:checked').value;
+
+            const areasElegidas = [
+                ...document.querySelectorAll('#areas input:checked')
+            ].map((x) => x.value);
+
+            boton.disabled = true;
+
+            try {
+                // El testimonio queda "pendiente" hasta que el equipo lo revise.
+                await api('/api/testimonios', {
+                    method: 'POST',
+                    body: {
+                        modo: modo,
+                        seudonimo: document.getElementById('ps').value.trim(),
+                        areas: areasElegidas,
+                        texto: tx.value.trim()
+                    }
+                });
+
+            } catch (err) {
+                boton.disabled = false;
+                error.textContent = err.status ? err.message : SIN_CONEXION;
+                return;
+            }
+
+            // Ocultar el formulario y mostrar la confirmación.
+            formulario.style.display = 'none';
+            estado.style.display = 'none';
+
+            const confirmacion = document.getElementById('ok');
+
+            confirmacion.style.display = 'block';
+            confirmacion.focus();
+        };
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Bajo la sombrilla</title>
+
+    <!-- Fuentes -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+
+    <!-- Hoja de estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Accesibilidad: saltar al contenido -->
+    <a class="skip" href="#main">Saltar al contenido</a>
+
+    <!-- ==================== ENCABEZADO ==================== -->
+    <header>
+        <div class="wrap nav">
+
+            <!-- Logotipo -->
+            <a
+                class="logo"
+                href="#inicio"
+                aria-label="Bajo la sombrilla, inicio"
+            >
+                <img
+                    class="logo-img"
+                    src="logo_3_transparente.png"
+                    alt=""
+                    width="46"
+                    height="39"
+                >
+                BAJO LA SOMBRILLA
+            </a>
+
+            <!-- Menú principal -->
+            <nav class="menu" aria-label="Principal">
+                <a href="#inicio">Inicio</a>
+                <a href="#que-es">¿Qué es?</a>
+                <a href="#ocupaciones">Ocupaciones emergentes</a>
+                <a href="#camino">Encuentra tu camino</a>
+                <a href="#recursos">Recursos</a>
+                <a href="#voces">Voces</a>
+            </nav>
+
+            <!-- Acceso y registro -->
+            <a class="btn sm alt hide-m" href="login.html">
+                INICIAR SESIÓN
+            </a>
+
+            <a class="btn sm hide-m" href="registro.html">
+                REGÍSTRATE
+            </a>
+
+            <!-- Botón de accesibilidad -->
+            <button
+                class="icon-btn"
+                id="a11yBtn"
+                aria-expanded="false"
+                aria-controls="a11y"
+            >
+                ♿ <span>Accesibilidad</span>
+            </button>
+
+            <!-- Menú móvil -->
+            <button
+                class="icon-btn burger"
+                id="burger"
+                aria-expanded="false"
+                aria-controls="mm"
+                aria-label="Abrir menú"
+            >
+                ☰ Menú
+            </button>
+
+        </div>
+
+        <!-- Navegación móvil -->
+        <nav id="mm" aria-label="Menú móvil">
+            <a href="#inicio">Inicio</a>
+            <a href="#que-es">¿Qué es?</a>
+            <a href="#ocupaciones">Ocupaciones emergentes</a>
+            <a href="#camino">Encuentra tu camino</a>
+            <a href="#recursos">Recursos</a>
+            <a href="#voces">Voces</a>
+            <a href="login.html">Iniciar sesión</a>
+            <a href="registro.html">Regístrate</a>
+        </nav>
+
+        <!-- Opciones de accesibilidad -->
+        <div
+            id="a11y"
+            role="dialog"
+            aria-label="Opciones de accesibilidad"
+        >
+            <strong>Ajusta la página a tu medida</strong>
+
+            <button class="btn sm" data-a="up">
+                A+ Aumentar texto
+            </button>
+
+            <button class="btn sm" data-a="down">
+                A− Reducir texto
+            </button>
+
+            <button
+                class="btn sm"
+                data-a="contrast"
+                aria-pressed="false"
+            >
+                ◐ Alto contraste
+            </button>
+
+            <button
+                class="btn sm"
+                data-a="motion"
+                aria-pressed="false"
+            >
+                Reducir movimiento
+            </button>
+
+            <button class="btn sm" data-a="reset">
+                Restablecer
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+    <main id="main">
+
+        <!-- 1. INICIO -->
+        <section class="hero" id="inicio">
+            <div class="wrap">
+
+                <div>
+                    <h1>BAJO LA SOMBRILLA</h1>
+
+                    <p class="sub">
+                        Un espacio para mujeres que construyen nuevos
+                        caminos después de las rejas.
+                    </p>
+
+                    <p>
+                        Una plataforma que acompaña a las mujeres en sus
+                        ocupaciones emergentes y en su proceso de
+                        reinserción, reconociendo aquello que empiezan
+                        a hacer, a ser y a construir cuando su vida
+                        cotidiana se reorganiza en libertad.
+                    </p>
+
+                    <div class="row">
+                        <a class="btn alt" href="#que-es">
+                            CONOCE ENTRETEJIDAS
+                        </a>
+
+                        <a class="btn" href="#apoyo">
+                            ENCUENTRA APOYO
+                        </a>
+                    </div>
+                </div>
+
+                <img
+                    class="hero-art"
+                    src="logo_3_transparente.png"
+                    alt="Sombrilla formada por palabras: enfoque de terapias ocupacionales desde el Sur y modelo de desempeño ocupacional"
+                    width="604"
+                    height="506"
+                >
+
+            </div>
+        </section>
+
+        <!-- 2. ¿QUÉ ES BAJO LA SOMBRILLA? -->
+        <section id="que-es" class="alt-bg">
+            <div class="wrap">
+
+                <h2>¿Qué es Bajo la sombrilla?</h2>
+
+                <p>
+                    Después de la privación de la libertad comienza otro
+                    proceso: volver a construir la vida cotidiana en
+                    comunidad. En este camino pueden aparecer nuevas
+                    responsabilidades, necesidades, intereses, vínculos,
+                    actividades y proyectos.
+                </p>
+
+                <p>
+                    Estas nuevas formas de ocupar, construir y habitar
+                    la vida hacen parte de las ocupaciones emergentes.
+                </p>
+
+                <p>
+                    Bajo la sombrilla nace como un espacio para acercar
+                    información, oportunidades y redes de apoyo a mujeres
+                    que se encuentran construyendo nuevos caminos
+                    después de las rejas.
+                </p>
+
+                <div class="grid" style="margin-top: 30px">
+
+                    <article class="card big">
+                        <div class="ico" aria-hidden="true">🧭</div>
+
+                        <h3>ORIENTAR</h3>
+
+                        <p>
+                            Información clara para conocer rutas,
+                            servicios y oportunidades.
+                        </p>
+                    </article>
+
+                    <article class="card big">
+                        <div class="ico" aria-hidden="true">🤝</div>
+
+                        <h3>CONECTAR</h3>
+
+                        <p>
+                            Enlace con instituciones, programas
+                            y organizaciones.
+                        </p>
+                    </article>
+
+                    <article class="card big">
+                        <div class="ico" aria-hidden="true">🌱</div>
+
+                        <h3>ACOMPAÑAR</h3>
+
+                        <p>
+                            Reconocimiento de experiencias, capacidades
+                            y procesos de construcción de nuevos
+                            proyectos de vida.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ENCUENTRA APOYO -->
+        <section id="apoyo">
+            <div class="wrap">
+
+                <h2>Encuentra apoyo</h2>
+
+                <p class="intro">
+                    Si necesitas orientación, información o
+                    acompañamiento, aquí puedes encontrar diferentes
+                    rutas y servicios.
+                </p>
+
+                <!-- El contenido se genera desde script.js -->
+                <div class="grid" id="apoyoGrid"></div>
+
+            </div>
+        </section>
+
+        <!-- 4. RECURSOS Y ORGANIZACIONES -->
+        <section id="recursos" class="alt-bg">
+            <div class="wrap">
+
+                <h2>Conecta con organizaciones y programas</h2>
+
+                <p class="intro">
+                    Explora las opciones y elige con quién quieres
+                    comunicarte.
+                </p>
+
+                <!-- Organizaciones generadas con JavaScript -->
+                <div class="grid" id="orgGrid"></div>
+
+            </div>
+        </section>
+
+        <!-- 5. OCUPACIONES EMERGENTES -->
+        <section id="ocupaciones">
+            <div class="wrap">
+
+                <h2>¿Por qué hablamos de ocupaciones emergentes?</h2>
+
+                <p class="intro">
+                    Las ocupaciones emergentes son aquellas actividades,
+                    roles, hábitos, proyectos y formas de participación
+                    que aparecen, se modifican o adquieren nuevos
+                    significados durante el proceso de reorganización
+                    de la vida después de la privación de la libertad.
+                </p>
+
+                <div class="occ">
+
+                    <!-- Contenido dinámico de las ocupaciones -->
+                    <div class="core" aria-live="polite">
+
+                        <h3 id="coreT">
+                            HACER · SER · PARTICIPAR
+                        </h3>
+
+                        <p id="coreP">
+                            Elige una de las ocupaciones para leer qué
+                            puede significar.
+                        </p>
+
+                    </div>
+
+                    <!-- Opciones creadas con JavaScript -->
+                    <div
+                        class="chips"
+                        id="chips"
+                        role="group"
+                        aria-label="Ocupaciones emergentes"
+                    ></div>
+
+                </div>
+
+                <p class="quote">
+                    “No se trata solamente de volver a hacer lo que se
+                    hacía antes. También se trata de descubrir qué nuevas
+                    formas de hacer, ser y participar pueden construirse
+                    en libertad.”
+                </p>
+
+            </div>
+        </section>
+
+        <!-- 6. RUTA DE LAS OCUPACIONES -->
+        <section class="alt-bg" id="ruta">
+            <div class="wrap">
+
+                <h2>Las ocupaciones emergentes en el camino</h2>
+
+                <p class="intro">
+                    Cada historia es diferente. Estos caminos no tienen
+                    un orden obligatorio: pueden recorrerse de distintas
+                    maneras y en diferentes momentos.
+                </p>
+
+                <!-- Etapas creadas con JavaScript -->
+                <ol class="ruta" id="rutaL"></ol>
+
+            </div>
+        </section>
+
+        <!-- 7. ENCUENTRA TU CAMINO -->
+        <section id="camino">
+            <div class="wrap">
+
+                <h2>Encuentra tu camino</h2>
+
+                <p class="intro">
+                    Toca las preguntas que quieras. No hay respuestas
+                    correctas ni un orden: son puntos para detenerte
+                    y pensar.
+                </p>
+
+                <div class="camino" id="cam">
+
+                    <!-- Camino visual -->
+                    <svg
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M20 0 C80 12, 10 22, 75 34 S15 55, 80 66 S20 88, 60 100"
+                            fill="none"
+                            stroke="#DCE7D6"
+                            stroke-width="7"
+                            vector-effect="non-scaling-stroke"
+                            style="stroke-width: 34px"
+                        />
+
+                        <path
+                            d="M20 0 C80 12, 10 22, 75 34 S15 55, 80 66 S20 88, 60 100"
+                            fill="none"
+                            stroke="#3F6148"
+                            stroke-width="3"
+                            stroke-dasharray="3 10"
+                            stroke-linecap="round"
+                            vector-effect="non-scaling-stroke"
+                            style="stroke-width: 3px"
+                        />
+                    </svg>
+
+                </div>
+
+                <div
+                    class="row"
+                    style="justify-content: center; margin-top: 34px"
+                >
+                    <a class="btn" href="#orientacion">
+                        QUIERO ENCONTRAR APOYO
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 8. FORMULARIO DE ORIENTACIÓN -->
+        <section id="orientacion" class="alt-bg">
+            <div class="wrap">
+
+                <h2>¿Necesitas orientación?</h2>
+
+                <p class="intro">
+                    Cuéntanos qué estás buscando. Compartir esta
+                    información es opcional.
+                </p>
+
+                <form id="f" novalidate>
+
+                    <!-- Nombre opcional -->
+                    <div>
+                        <label for="n">
+                            Nombre o seudónimo
+                            <span class="hint">(opcional)</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="n"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <!-- Medio de contacto opcional -->
+                    <div>
+                        <label for="c">
+                            Medio de contacto
+                            <span class="hint">
+                                (opcional; escríbelo solo si quieres
+                                que te respondan)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="c"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <!-- Motivos de orientación -->
+                    <fieldset>
+                        <legend>
+                            ¿Qué estás buscando?
+                            <span class="hint">
+                                (elige una o varias)
+                            </span>
+                        </legend>
+
+                        <div class="opts" id="opts"></div>
+                    </fieldset>
+
+                    <!-- Mensaje -->
+                    <div>
+                        <label for="m">
+                            Mensaje o necesidad específica
+                        </label>
+
+                        <textarea
+                            id="m"
+                            aria-describedby="e"
+                        ></textarea>
+
+                        <div
+                            class="err"
+                            id="e"
+                            role="alert"
+                        ></div>
+                    </div>
+
+                    <p class="notice">
+                        Tu información debe utilizarse únicamente
+                        para fines de orientación. Evita compartir
+                        datos personales sensibles si no son necesarios.
+                    </p>
+
+                    <div>
+                        <button class="btn" type="submit">
+                            ENVIAR SOLICITUD
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Confirmación del formulario -->
+                <div
+                    id="ok"
+                    role="status"
+                    tabindex="-1"
+                >
+                    <strong>Gracias por escribir.</strong>
+
+                    Tu solicitud fue recibida. Si dejaste un medio de contacto, el equipo podrá comunicarse contigo. Mientras tanto, puedes llamar a cualquiera de las líneas de la
+                    sección “Encuentra apoyo”.
+                </div>
+
+                <!-- 9. COMPARTIR TESTIMONIO -->
+                <div class="testi-help" id="testimonio">
+
+                    <h3>¿Quieres compartir tu testimonio?</h3>
+
+                    <p>
+                        Tu experiencia puede inspirar a otras mujeres.
+                        Puedes compartirla de dos maneras:
+                    </p>
+
+                    <ol>
+                        <li>
+                            Elige cómo quieres compartir: de forma
+                            anónima o con tu cuenta.
+                        </li>
+
+                        <li>
+                            Escribe tu testimonio y, si quieres,
+                            el área de interés.
+                        </li>
+
+                        <li>
+                            Envíalo: el equipo lo revisa antes de
+                            publicarlo en “Voces”.
+                        </li>
+                    </ol>
+
+                    <div class="grid">
+
+                        <!-- Testimonio anónimo -->
+                        <article class="card">
+
+                            <div class="ico" aria-hidden="true">
+                                🕊️
+                            </div>
+
+                            <h3>De forma anónima</h3>
+
+                            <p>
+                                No necesitas cuenta ni dar tu nombre.
+                                Tu testimonio se publica sin ningún dato
+                                que te identifique.
+                            </p>
+
+                            <div class="push">
+                                <a class="btn sm" href="testimonio.html">
+                                    COMPARTIR ANÓNIMAMENTE
+                                </a>
+                            </div>
+
+                        </article>
+
+                        <!-- Testimonio con cuenta -->
+                        <article class="card">
+
+                            <div class="ico" aria-hidden="true">
+                                🔑
+                            </div>
+
+                            <h3>Con una cuenta</h3>
+
+                            <p>
+                                Inicia sesión o regístrate para firmar
+                                con tu nombre o con un seudónimo que tú
+                                elijas. Si ya iniciaste sesión, vas
+                                directo al formulario.
+                            </p>
+
+                            <div class="push">
+                                <a
+                                    class="btn sm alt"
+                                    id="testiCuenta"
+                                    href="login.html?next=testimonio.html"
+                                >
+                                    INICIAR SESIÓN Y COMPARTIR
+                                </a>
+                            </div>
+
+                        </article>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 10. VOCES -->
+        <section id="voces">
+            <div class="wrap">
+
+                <h2>Voces que construyen nuevos caminos</h2>
+
+                <p class="intro">
+                    Experiencias, aprendizajes y nuevas formas de
+                    construir la vida cotidiana.
+                </p>
+
+                <div class="grid">
+
+                    <article class="card soon">
+
+                        <div class="ico" aria-hidden="true">
+                            💬
+                        </div>
+
+                        <h3>Próximamente</h3>
+
+                        <p>
+                            Este espacio estará destinado a compartir
+                            experiencias de mujeres que han construido
+                            nuevas ocupaciones y proyectos después de
+                            la privación de la libertad.
+                        </p>
+
+                    </article>
+
+                    <article class="card soon" aria-hidden="true">
+
+                        <div class="ico">🌿</div>
+
+                        <p style="opacity: 0.7">
+                            Aquí irán: fotografía opcional, nombre
+                            o seudónimo, testimonio, área de interés
+                            y fecha.
+                        </p>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== PIE DE PÁGINA ==================== -->
+    <footer>
+        <div class="wrap">
+
+            <h2>BAJO LA SOMBRILLA</h2>
+
+            <p>
+                Un espacio para mujeres que construyen nuevos caminos
+                después de las rejas.
+            </p>
+
+            <p>
+                <strong>
+                    Proyecto académico de Terapia Ocupacional
+                </strong>
+            </p>
+
+            <!-- Enlaces del pie de página -->
+            <nav aria-label="Pie de página">
+                <ul>
+                    <li>
+                        <a href="#inicio">Inicio</a>
+                    </li>
+
+                    <li>
+                        <a href="#que-es">¿Qué es?</a>
+                    </li>
+
+                    <li>
+                        <a href="#recursos">Recursos</a>
+                    </li>
+
+                    <li>
+                        <a href="#camino">Encuentra tu camino</a>
+                    </li>
+
+                    <li>
+                        <a href="#voces">Voces</a>
+                    </li>
+
+                    <li>
+                        <a href="#privacidad" id="privacidad">
+                            Política de privacidad (próximamente)
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#a11yBtn" id="fa">
+                            Accesibilidad
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="admin.html">Administración</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <p>Información actualizada periódicamente.</p>
+
+        </div>
+    </footer>
+
+    <!-- ==================== BARRA INFERIOR ==================== -->
+    <div class="bar">
+
+        <a class="btn" href="#apoyo">
+            ENCUENTRA APOYO
+        </a>
+
+        <a
+            class="btn alt"
+            href="tel:155"
+            aria-label="Llamar a la línea 155"
+        >
+            📞 155
+        </a>
+
+    </div>
+
+    <!-- Archivo JavaScript principal -->
+    <script src="script.js"></script>
+
+</body>
+</html>

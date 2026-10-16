@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <!-- Evita que los buscadores indexen esta página -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Administración · Bajo la sombrilla</title>
+
+    <!-- Fuentes -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+
+    <!-- Estilos generales -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Ajustes propios del panel */
+        .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 26px; }
+        .tabs .btn[aria-pressed="true"] { background: var(--petrol); border-color: var(--petrol); color: var(--sand); }
+        .resumen { margin-bottom: 26px; }
+        .dato { background: var(--card); border: 2px solid var(--line); border-radius: var(--r); padding: 16px 20px; }
+        .dato b { display: block; font: 800 2rem Nunito, sans-serif; color: var(--petrol); }
+        .herr { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+        .herr label { margin: 0; }
+        .herr select { width: auto; min-width: 200px; }
+        .lista { display: grid; gap: 16px; }
+        .lista .card:hover { transform: none; }
+        .cab { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 8px; }
+        .cab h3 { margin: 0; }
+        .etq { font: 700 .85rem Nunito, sans-serif; padding: 3px 12px; border-radius: 999px; background: var(--sage); color: var(--ink); }
+        .etq.pendiente { background: var(--sun); color: #000; }
+        .etq.rechazado { background: var(--ink); color: var(--bg); }
+        .fecha { font-size: .95rem; }
+        .texto { white-space: pre-wrap; max-width: none; }
+        .acciones { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+        .vacio { border: 2px dashed var(--line); border-radius: var(--r); padding: 28px; text-align: center; }
+        .ok-msg { font-weight: 700; min-height: 1.2em; color: var(--petrol); }
+        .btn.peligro { background: transparent; color: #B3361A; border-color: #B3361A; }
+        #panel form { max-width: 520px; }
+        
+    </style>
+</head>
+
+<body>
+
+    <a class="skip" href="#main">Saltar al contenido</a>
+
+    <!-- ==================== ENCABEZADO ==================== -->
+    <header>
+        <div class="wrap nav">
+
+            <a
+                class="logo"
+                href="Bajo_la_sombrilla.html"
+                aria-label="Bajo la sombrilla, inicio"
+            >
+                <img
+                    class="logo-img"
+                    src="logo_3_transparente.png"
+                    alt=""
+                    width="46"
+                    height="39"
+                >
+                BAJO LA SOMBRILLA
+            </a>
+
+            <a class="btn sm alt" href="Bajo_la_sombrilla.html">
+                VOLVER AL INICIO
+            </a>
+
+            <button class="btn sm" id="salir" type="button" hidden>
+                CERRAR SESIÓN DE ADMINISTRACIÓN
+            </button>
+
+        </div>
+    </header>
+
+    <main id="main">
+
+        <!-- ==================== ACCESO ==================== -->
+        <section class="auth" id="acceso" hidden>
+            <div class="wrap">
+
+                <h1>Acceso de administración</h1>
+
+                <p class="intro">
+                    Solo para el equipo de Bajo la sombrilla. Aquí se
+                    revisan los testimonios antes de publicarlos y se
+                    atienden las solicitudes de orientación.
+                </p>
+
+                <form id="fAcceso" novalidate>
+
+                    <div>
+                        <label for="correo">Correo de administración</label>
+
+                        <input
+                            type="email"
+                            id="correo"
+                            autocomplete="username"
+                            aria-describedby="eAcceso"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="clave">Contraseña</label>
+
+                        <input
+                            type="password"
+                            id="clave"
+                            autocomplete="current-password"
+                            aria-describedby="eAcceso"
+                        >
+                    </div>
+
+                    <div class="err" id="eAcceso" role="alert"></div>
+
+                    <div>
+                        <button class="btn" type="submit">ENTRAR</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </section>
+
+        <!-- ==================== PANEL ==================== -->
+        <section id="panel" hidden>
+            <div class="wrap">
+
+                <h1>Panel de administración</h1>
+
+                <div class="grid resumen" id="resumen"></div>
+
+                <div class="tabs" role="group" aria-label="Secciones del panel">
+                    <button class="btn" type="button" data-tab="testi" aria-pressed="true">
+                        TESTIMONIOS
+                    </button>
+                    <button class="btn alt" type="button" data-tab="sol" aria-pressed="false">
+                        SOLICITUDES DE ORIENTACIÓN
+                    </button>
+                    <button class="btn alt" type="button" data-tab="cfg" aria-pressed="false">
+                        AJUSTES
+                    </button>
+                </div>
+
+                <!-- Testimonios -->
+                <div id="tab-testi">
+                    <p class="notice">
+                        Los testimonios aprobados aparecen en la sección
+                        “Voces” de la página. Los pendientes solo los ves tú.
+                    </p>
+
+                    <div class="herr">
+                        <label for="fTesti">Mostrar:</label>
+
+                        <select id="fTesti">
+                            <option value="pendiente">Pendientes</option>
+                            <option value="aprobado">Publicados</option>
+                            <option value="rechazado">Rechazados</option>
+                            <option value="todos">Todos</option>
+                        </select>
+                    </div>
+
+                    <div class="lista" id="listaTesti"></div>
+                </div>
+
+                <!-- Solicitudes -->
+                <div id="tab-sol" hidden>
+                    <p class="notice">
+                        Esta información es sensible. Úsala solo para
+                        orientar y responder a quien la envió.
+                    </p>
+
+                    <div class="herr">
+                        <label for="fSol">Mostrar:</label>
+
+                        <select id="fSol">
+                            <option value="nueva">Por atender</option>
+                            <option value="atendida">Atendidas</option>
+                            <option value="todas">Todas</option>
+                        </select>
+
+                        <a class="btn sm alt" id="expSol" href="/api/admin/solicitudes.csv">
+                            DESCARGAR CSV
+                        </a>
+                    </div>
+
+                    <div class="lista" id="listaSol"></div>
+                </div>
+
+                <!-- Ajustes -->
+                <div id="tab-cfg" hidden>
+
+                    <form id="fClave" novalidate>
+                        <h2>Cambiar contraseña</h2>
+
+                        <div>
+                            <label for="cActual">Contraseña actual</label>
+                            <input type="password" id="cActual" autocomplete="current-password">
+                        </div>
+
+                        <div>
+                            <label for="cNueva">
+                                Contraseña nueva
+                                <span class="hint">(mínimo 10 caracteres)</span>
+                            </label>
+                            <input type="password" id="cNueva" autocomplete="new-password">
+                        </div>
+
+                        <div>
+                            <label for="cNueva2">Repite la contraseña nueva</label>
+                            <input type="password" id="cNueva2" autocomplete="new-password">
+                        </div>
+
+                        <div class="err" id="eClave" role="alert"></div>
+
+                        <div>
+                            <button class="btn" type="submit">GUARDAR CONTRASEÑA</button>
+                        </div>
+                    </form>
+
+                    <p class="ok-msg" id="cfgMsg" role="status"></p>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== PIE DE PÁGINA ==================== -->
+    <footer>
+        <div class="wrap">
+
+            <h2>BAJO LA SOMBRILLA</h2>
+
+            <p>
+                Un espacio para mujeres que construyen nuevos caminos
+                después de las rejas.
+            </p>
+
+            <p>
+                <strong>Proyecto académico de Terapia Ocupacional</strong>
+            </p>
+
+        </div>
+    </footer>
+
+    <script>
+    /* =========================================================
+       UTILIDADES
+       ========================================================= */
+    const $ = (id) => document.getElementById(id);
+
+    const SIN_CONEXION = 'No hay conexión con el servidor. Intenta de nuevo en unos minutos.';
+
+    // Petición a la API. Si hay error, lanza un Error con el mensaje del servidor.
+    async function api(url, opciones = {}) {
+        const r = await fetch(url, {
+            method: opciones.method || 'GET',
+            headers: opciones.body ? { 'Content-Type': 'application/json' } : {},
+            body: opciones.body ? JSON.stringify(opciones.body) : undefined,
+            credentials: 'same-origin'
+        });
+
+        let datos = null;
+        try { datos = await r.json(); } catch (e) {}
+
+        if (!r.ok) {
+            const err = new Error((datos && datos.error) || 'Ocurrió un error. Intenta de nuevo.');
+            err.status = r.status;
+            throw err;
+        }
+        return datos;
+    }
+
+    // Evita que el texto escrito por las visitantes se ejecute como código
+    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+
+    const fmtFecha = (iso) => {
+        const d = new Date(iso);
+        return isNaN(d) ? '' : d.toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
+    };
+
+    const lista = (txt) => (txt ? txt.split(', ') : []);
+
+    /* =========================================================
+       SESIÓN
+       La administración usa la misma API que el resto del sitio;
+       el servidor decide si la cuenta tiene rol "admin".
+       ========================================================= */
+    function verAcceso(mensaje) {
+        $('acceso').hidden = false;
+        $('panel').hidden = true;
+        $('salir').hidden = true;
+        $('eAcceso').textContent = mensaje || '';
+        $('clave').value = '';
+        (mensaje ? $('clave') : $('correo')).focus();
+    }
+
+    async function verPanel() {
+        $('acceso').hidden = true;
+        $('panel').hidden = false;
+        $('salir').hidden = false;
+        await pintarTodo();
+    }
+
+    // Si el servidor responde 401/403 (sesión vencida), vuelve al acceso
+    function manejar(err) {
+        if (err.status === 401 || err.status === 403) {
+            verAcceso('Tu sesión venció. Entra de nuevo.');
+        } else {
+            alert(err.status ? err.message : SIN_CONEXION);
+        }
+    }
+
+    $('fAcceso').onsubmit = async (ev) => {
+        ev.preventDefault();
+
+        const err = $('eAcceso');
+        const boton = ev.target.querySelector('button[type="submit"]');
+
+        err.textContent = '';
+        boton.disabled = true;
+
+        try {
+            const d = await api('/api/login', {
+                method: 'POST',
+                body: { email: $('correo').value.trim(), password: $('clave').value }
+            });
+
+            if (d.usuaria.rol !== 'admin') {
+                await api('/api/logout', { method: 'POST' });
+                err.textContent = 'Esta cuenta no tiene permisos de administración.';
+                return;
+            }
+            await verPanel();
+        } catch (e) {
+            err.textContent = e.status ? e.message : SIN_CONEXION;
+        } finally {
+            boton.disabled = false;
+        }
+    };
+
+    $('salir').onclick = async () => {
+        try { await api('/api/logout', { method: 'POST' }); } catch (e) {}
+        verAcceso();
+    };
+
+    /* =========================================================
+       PESTAÑAS
+       ========================================================= */
+    document.querySelectorAll('[data-tab]').forEach((b) => {
+        b.onclick = () => {
+            document.querySelectorAll('[data-tab]').forEach((x) => {
+                const activo = x === b;
+                x.setAttribute('aria-pressed', activo);
+                x.classList.toggle('alt', !activo);
+                $('tab-' + x.dataset.tab).hidden = !activo;
+            });
+        };
+    });
+
+    /* =========================================================
+       PINTAR EL PANEL
+       ========================================================= */
+    async function pintarResumen() {
+        const r = await api('/api/admin/resumen');
+
+        $('resumen').innerHTML =
+            `<div class="dato"><b>${r.testimoniosPendientes}</b>testimonios por revisar</div>` +
+            `<div class="dato"><b>${r.testimoniosPublicados}</b>testimonios publicados</div>` +
+            `<div class="dato"><b>${r.solicitudesNuevas}</b>solicitudes por atender</div>`;
+    }
+
+    async function pintarTesti() {
+        const f = $('fTesti').value;
+        const datos = await api('/api/admin/testimonios' + (f === 'todos' ? '' : '?estado=' + f));
+
+        $('listaTesti').innerHTML = datos.length ? datos.map((t) => `
+            <article class="card">
+                <div class="cab">
+                    <h3>${esc(t.nombre_publico || 'Anónimo')}</h3>
+                    <span class="etq ${esc(t.estado)}">${esc(t.estado)}</span>
+                    ${lista(t.areas).map((a) => `<span class="etq">${esc(a)}</span>`).join('')}
+                    <span class="fecha">${fmtFecha(t.creado_en)}</span>
+                </div>
+                <p class="texto">${esc(t.texto)}</p>
+                <div class="acciones">
+                    ${t.estado !== 'aprobado' ? `<button class="btn sm" data-a="aprobar" data-id="${t.id}">PUBLICAR</button>` : ''}
+                    ${t.estado !== 'rechazado' ? `<button class="btn sm alt" data-a="rechazar" data-id="${t.id}">RECHAZAR</button>` : ''}
+                    <button class="btn sm peligro" data-a="borrarT" data-id="${t.id}">ELIMINAR</button>
+                </div>
+            </article>`).join('')
+            : '<div class="vacio">No hay testimonios en esta lista.</div>';
+    }
+
+    async function pintarSol() {
+        const f = $('fSol').value;
+        const datos = await api('/api/admin/solicitudes' + (f === 'todas' ? '' : '?estado=' + f));
+
+        $('listaSol').innerHTML = datos.length ? datos.map((s) => `
+            <article class="card">
+                <div class="cab">
+                    <h3>${esc(s.nombre || 'Sin nombre')}</h3>
+                    <span class="etq ${s.estado === 'atendida' ? '' : 'pendiente'}">${s.estado === 'atendida' ? 'atendida' : 'por atender'}</span>
+                    <span class="fecha">${fmtFecha(s.creado_en)}</span>
+                </div>
+                <p><strong>Contacto:</strong> ${esc(s.contacto || 'No dejó contacto')}</p>
+                ${s.motivos ? `<p>${lista(s.motivos).map((m) => `<span class="etq">${esc(m)}</span>`).join(' ')}</p>` : ''}
+                ${s.mensaje ? `<p class="texto">${esc(s.mensaje)}</p>` : ''}
+                <div class="acciones">
+                    ${s.estado === 'atendida'
+                        ? `<button class="btn sm alt" data-a="reabrir" data-id="${s.id}">MARCAR POR ATENDER</button>`
+                        : `<button class="btn sm" data-a="atender" data-id="${s.id}">MARCAR COMO ATENDIDA</button>`}
+                    <button class="btn sm peligro" data-a="borrarS" data-id="${s.id}">ELIMINAR</button>
+                </div>
+            </article>`).join('')
+            : '<div class="vacio">No hay solicitudes en esta lista.</div>';
+    }
+
+    async function pintarTodo() {
+        try { await Promise.all([pintarResumen(), pintarTesti(), pintarSol()]); }
+        catch (e) { manejar(e); }
+    }
+
+    $('fTesti').onchange = () => pintarTesti().catch(manejar);
+    $('fSol').onchange = () => pintarSol().catch(manejar);
+
+    /* =========================================================
+       ACCIONES
+       ========================================================= */
+    document.addEventListener('click', async (e) => {
+        const b = e.target.closest('[data-a]');
+        if (!b) return;
+
+        const { a, id } = b.dataset;
+
+        try {
+            if (a === 'aprobar')  await api('/api/admin/testimonios/' + id, { method: 'PATCH', body: { estado: 'aprobado' } });
+            if (a === 'rechazar') await api('/api/admin/testimonios/' + id, { method: 'PATCH', body: { estado: 'rechazado' } });
+            if (a === 'atender')  await api('/api/admin/solicitudes/' + id, { method: 'PATCH', body: { estado: 'atendida' } });
+            if (a === 'reabrir')  await api('/api/admin/solicitudes/' + id, { method: 'PATCH', body: { estado: 'nueva' } });
+
+            if (a === 'borrarT') {
+                if (!confirm('¿Eliminar este testimonio de forma definitiva?')) return;
+                await api('/api/admin/testimonios/' + id, { method: 'DELETE' });
+            }
+            if (a === 'borrarS') {
+                if (!confirm('¿Eliminar esta solicitud de forma definitiva?')) return;
+                await api('/api/admin/solicitudes/' + id, { method: 'DELETE' });
+            }
+        } catch (err) { return manejar(err); }
+
+        pintarTodo();
+    });
+
+    /* =========================================================
+       AJUSTES: CAMBIAR CONTRASEÑA
+       ========================================================= */
+    $('fClave').onsubmit = async (ev) => {
+        ev.preventDefault();
+
+        const err = $('eClave');
+        const nueva = $('cNueva').value;
+
+        $('cfgMsg').textContent = '';
+
+        if (nueva.length < 10) { err.textContent = 'La contraseña nueva debe tener al menos 10 caracteres.'; return; }
+        if (nueva !== $('cNueva2').value) { err.textContent = 'Las contraseñas nuevas no coinciden.'; return; }
+
+        try {
+            await api('/api/cambiar-clave', { method: 'POST', body: { actual: $('cActual').value, nueva } });
+            $('fClave').reset();
+            err.textContent = '';
+            $('cfgMsg').textContent = 'Contraseña actualizada.';
+        } catch (e) {
+            err.textContent = e.status ? e.message : SIN_CONEXION;
+        }
+    };
+
+    /* =========================================================
+       INICIO: ¿ya hay una sesión de administración?
+       ========================================================= */
+    (async () => {
+        try {
+            const d = await api('/api/yo');
+            if (d.usuaria && d.usuaria.rol === 'admin') return verPanel();
+        } catch (e) {}
+        verAcceso();
+    })();
+    </script>
+
+</body>
+</html>

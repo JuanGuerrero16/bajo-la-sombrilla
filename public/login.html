@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <title>Iniciar sesión · Bajo la sombrilla</title>
+
+    <!-- Fuentes -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+
+    <!-- Estilos generales -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Acceso rápido al contenido -->
+    <a class="skip" href="#main">
+        Saltar al contenido
+    </a>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <div class="wrap nav">
+
+            <a
+                class="logo"
+                href="Bajo_la_sombrilla.html"
+                aria-label="Bajo la sombrilla, inicio"
+            >
+                <img
+                    class="logo-img"
+                    src="logo_3_transparente.png"
+                    alt=""
+                    width="46"
+                    height="39"
+                >
+
+                BAJO LA SOMBRILLA
+            </a>
+
+            <a
+                class="btn sm alt"
+                href="Bajo_la_sombrilla.html"
+            >
+                VOLVER AL INICIO
+            </a>
+
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main id="main">
+
+        <section class="auth">
+            <div class="wrap">
+
+                <h1>Iniciar sesión</h1>
+
+                <p class="intro">
+                    Entra a tu cuenta para compartir tu testimonio
+                    con tu nombre o seudónimo.
+                </p>
+
+                <!-- FORMULARIO -->
+                <form id="f" novalidate>
+
+                    <div>
+                        <label for="email">
+                            Correo electrónico
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            aria-describedby="e"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="pw">
+                            Contraseña
+                        </label>
+
+                        <input
+                            type="password"
+                            id="pw"
+                            name="password"
+                            autocomplete="current-password"
+                            aria-describedby="e"
+                        >
+                    </div>
+
+                    <!-- Mensajes de error -->
+                    <div
+                        class="err"
+                        id="e"
+                        role="alert"
+                    ></div>
+
+                    <div>
+                        <button class="btn" type="submit">
+                            INICIAR SESIÓN
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- ENLACE DE REGISTRO -->
+                <p class="alt-link">
+                    ¿Aún no tienes cuenta?
+
+                    <a id="goReg" href="registro.html">
+                        Regístrate
+                    </a>
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="wrap">
+
+            <h2>BAJO LA SOMBRILLA</h2>
+
+            <p>
+                Un espacio para mujeres que construyen nuevos
+                caminos después de las rejas.
+            </p>
+
+            <p>
+                <strong>
+                    Proyecto académico de Terapia Ocupacional
+                </strong>
+            </p>
+
+        </div>
+    </footer>
+
+    <!-- LÓGICA DE AUTENTICACIÓN -->
+    <script src="auth.js"></script>
+
+    <script>
+        // Elementos del formulario
+        const f = document.getElementById("f");
+        const e = document.getElementById("e");
+
+        const em = document.getElementById("email");
+        const pw = document.getElementById("pw");
+        const goReg = document.getElementById("goReg");
+
+        // Conservar los parámetros de la URL al ir al registro
+        goReg.href = "registro.html" + location.search;
+
+        // Validar el formulario y entrar
+        f.addEventListener("submit", async function (ev) {
+            ev.preventDefault();
+
+            // Limpiar errores anteriores
+            [em, pw].forEach(function (campo) {
+                campo.removeAttribute("aria-invalid");
+            });
+
+            e.textContent = "";
+
+            // Validar correo electrónico
+            if (!emailValido(em.value.trim())) {
+                return marcarError(
+                    em,
+                    e,
+                    "Escribe un correo electrónico válido."
+                );
+            }
+
+            // Validar contraseña
+            if (!pw.value) {
+                return marcarError(
+                    pw,
+                    e,
+                    "Escribe tu contraseña."
+                );
+            }
+
+            const boton = f.querySelector('button[type="submit"]');
+            boton.disabled = true;
+
+            try {
+                const datos = await api("/api/login", {
+                    method: "POST",
+                    body: {
+                        email: em.value.trim(),
+                        password: pw.value
+                    }
+                });
+
+                Sesion.set(datos.usuaria.nombre);
+
+                // Continuar a la siguiente página
+                location.href = siguiente();
+
+            } catch (err) {
+                boton.disabled = false;
+                e.textContent = err.status ? err.message : SIN_CONEXION;
+            }
+        });
+    </script>
+
+</body>
+</html>

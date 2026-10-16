@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Regístrate · Bajo la sombrilla</title>
+
+    <!-- Fuentes -->
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Enlace para accesibilidad -->
+    <a class="skip" href="#main">
+        Saltar al contenido
+    </a>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="wrap nav">
+
+            <a
+                class="logo"
+                href="Bajo_la_sombrilla.html"
+                aria-label="Bajo la sombrilla, inicio"
+            >
+                <img
+                    class="logo-img"
+                    src="logo_3_transparente.png"
+                    alt=""
+                    width="46"
+                    height="39"
+                >
+                BAJO LA SOMBRILLA
+            </a>
+
+            <a
+                class="btn sm alt"
+                href="Bajo_la_sombrilla.html"
+            >
+                VOLVER AL INICIO
+            </a>
+
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main id="main">
+
+        <section class="auth">
+            <div class="wrap">
+
+                <h1>Regístrate</h1>
+
+                <p class="intro">
+                    Crear una cuenta es opcional. Te permite compartir
+                    testimonios con tu nombre o seudónimo. Si prefieres,
+                    también puedes compartir de forma anónima sin cuenta.
+                </p>
+
+                <!-- Formulario de registro -->
+                <form id="f" novalidate>
+
+                    <div>
+                        <label for="nom">
+                            Nombre o seudónimo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nom"
+                            autocomplete="nickname"
+                            aria-describedby="e"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="email">
+                            Correo electrónico
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            autocomplete="email"
+                            aria-describedby="e"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="pw">
+                            Contraseña
+                            <span class="hint">
+                                (mínimo 8 caracteres)
+                            </span>
+                        </label>
+
+                        <input
+                            type="password"
+                            id="pw"
+                            autocomplete="new-password"
+                            aria-describedby="e"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="pw2">
+                            Repite la contraseña
+                        </label>
+
+                        <input
+                            type="password"
+                            id="pw2"
+                            autocomplete="new-password"
+                            aria-describedby="e"
+                        >
+                    </div>
+
+                    <!-- Mensajes de error -->
+                    <div
+                        class="err"
+                        id="e"
+                        role="alert"
+                    ></div>
+
+                    <p class="notice">
+                        Usa un seudónimo si no quieres que aparezca
+                        tu nombre real. Evita compartir datos personales
+                        sensibles.
+                    </p>
+
+                    <div>
+                        <button class="btn" type="submit">
+                            CREAR CUENTA
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Acceso para usuarios registrados -->
+                <p class="alt-link">
+                    ¿Ya tienes cuenta?
+                    <a id="goLog" href="login.html">
+                        Inicia sesión
+                    </a>
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <div class="wrap">
+
+            <h2>BAJO LA SOMBRILLA</h2>
+
+            <p>
+                Un espacio para mujeres que construyen nuevos caminos
+                después de las rejas.
+            </p>
+
+            <p>
+                <strong>
+                    Proyecto académico de Terapia Ocupacional
+                </strong>
+            </p>
+
+        </div>
+    </footer>
+
+    <!-- Archivo de autenticación -->
+    <script src="auth.js"></script>
+
+    <!-- Validación del formulario -->
+    <script>
+        const f = document.getElementById('f');
+        const e = document.getElementById('e');
+
+        const nom = document.getElementById('nom');
+        const em = document.getElementById('email');
+        const pw = document.getElementById('pw');
+        const pw2 = document.getElementById('pw2');
+
+        // Conserva los parámetros de la URL al iniciar sesión.
+        document.getElementById('goLog').href =
+            'login.html' + location.search;
+
+        f.onsubmit = async (ev) => {
+            ev.preventDefault();
+
+            // Limpiar errores anteriores.
+            [nom, em, pw, pw2].forEach((campo) => {
+                campo.removeAttribute('aria-invalid');
+            });
+
+            e.textContent = '';
+
+            // Validar nombre o seudónimo.
+            if (!nom.value.trim()) {
+                return marcarError(
+                    nom,
+                    e,
+                    'Escribe un nombre o seudónimo.'
+                );
+            }
+
+            // Validar correo electrónico.
+            if (!emailValido(em.value.trim())) {
+                return marcarError(
+                    em,
+                    e,
+                    'Escribe un correo electrónico válido.'
+                );
+            }
+
+            // Validar longitud de la contraseña.
+            if (pw.value.length < 8) {
+                return marcarError(
+                    pw,
+                    e,
+                    'La contraseña debe tener al menos 8 caracteres.'
+                );
+            }
+
+            // Confirmar que las contraseñas coincidan.
+            if (pw.value !== pw2.value) {
+                return marcarError(
+                    pw2,
+                    e,
+                    'Las contraseñas no coinciden.'
+                );
+            }
+
+            const boton = f.querySelector('button[type="submit"]');
+            boton.disabled = true;
+
+            try {
+                // Crear la cuenta en el servidor.
+                const datos = await api('/api/registro', {
+                    method: 'POST',
+                    body: {
+                        nombre: nom.value.trim(),
+                        email: em.value.trim(),
+                        password: pw.value
+                    }
+                });
+
+                Sesion.set(datos.usuaria.nombre);
+
+                location.href = siguiente();
+
+            } catch (err) {
+                boton.disabled = false;
+                e.textContent = err.status ? err.message : SIN_CONEXION;
+            }
+        };
+    </script>
+
+</body>
+</html>
