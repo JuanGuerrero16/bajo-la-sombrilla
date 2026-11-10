@@ -7,15 +7,15 @@ const $ = (selector) => document.querySelector(selector);
 const H = (tag, attributes = {}, innerHTML = "") =>
   Object.assign(document.createElement(tag), attributes, { innerHTML });
 
-const rootElement = document.documentElement;
-
-let fontSizePercentage = 100;
-
+// En local se usa el puerto 3000. En producción se usa el mismo dominio
+// desde el que se sirve el sitio (el servidor también sirve la carpeta front).
+// Si el frontend vive en otro dominio, define window.SOMBRILLA_API_URL.
 const API_URL =
-  window.location.hostname === "localhost" ||
+  window.SOMBRILLA_API_URL ||
+  (window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
     ? "http://localhost:3000"
-    : "https://tu-backend-en-railway-o-render.com";
+    : window.location.origin);
 
 /* ==========================================================================
    2. DATOS DE LA APLICACIÓN
@@ -533,89 +533,7 @@ document.querySelectorAll("#mm a").forEach((link) => {
 });
 
 /* ==========================================================================
-   5. PANEL DE ACCESIBILIDAD
-   ========================================================================== */
-
-const a11yBtn = $("#a11yBtn");
-const a11yPanel = $("#a11y");
-
-const toggleA11yPanel = (state) => {
-  const isOpen = state ?? !a11yPanel.classList.contains("open");
-
-  a11yPanel.classList.toggle("open", isOpen);
-  a11yBtn.setAttribute("aria-expanded", isOpen);
-};
-
-// Abrir o cerrar el panel
-a11yBtn.onclick = () => toggleA11yPanel();
-
-// Abrir el panel desde el enlace del pie de página
-$("#fa").onclick = (e) => {
-  e.preventDefault();
-
-  toggleA11yPanel(true);
-  a11yPanel.querySelector("button").focus();
-
-  scrollTo({ top: 0 });
-};
-
-// Cerrar el panel con Escape
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    toggleA11yPanel(false);
-    a11yBtn.focus();
-  }
-});
-
-// Controles del panel de accesibilidad
-a11yPanel.querySelectorAll("[data-a]").forEach((btn) => {
-  btn.onclick = () => {
-    const action = btn.dataset.a;
-
-    // Aumentar tamaño del texto
-    if (action === "up") {
-      fontSizePercentage = Math.min(150, fontSizePercentage + 10);
-    }
-
-    // Reducir tamaño del texto
-    if (action === "down") {
-      fontSizePercentage = Math.max(85, fontSizePercentage - 10);
-    }
-
-    // Activar o desactivar alto contraste
-    if (action === "contrast") {
-      const isContrast = rootElement.dataset.contrast !== "1";
-
-      rootElement.dataset.contrast = isContrast ? "1" : "0";
-      btn.setAttribute("aria-pressed", isContrast);
-    }
-
-    // Activar o desactivar animaciones
-    if (action === "motion") {
-      const isMotion = rootElement.dataset.motion !== "0";
-
-      rootElement.dataset.motion = isMotion ? "0" : "1";
-      btn.setAttribute("aria-pressed", isMotion);
-    }
-
-    // Restaurar configuración predeterminada
-    if (action === "reset") {
-      fontSizePercentage = 100;
-
-      rootElement.dataset.contrast = "0";
-      rootElement.dataset.motion = "1";
-
-      a11yPanel.querySelectorAll("[aria-pressed]").forEach((element) => {
-        element.setAttribute("aria-pressed", "false");
-      });
-    }
-
-    rootElement.style.fontSize = fontSizePercentage + "%";
-  };
-});
-
-/* ==========================================================================
-   6. ESTADO DE SESIÓN
+   5. ESTADO DE SESIÓN
    ========================================================================== */
 
 // Cambiar los botones del encabezado si hay una sesión guardada

@@ -207,10 +207,17 @@
                     }
                 });
 
-                Sesion.set(datos.usuaria.nombre);
+                Sesion.set(datos.usuaria);
 
-                // Continuar a la siguiente página
-                location.href = siguiente();
+                // Cada rol tiene su propio panel
+                if (datos.usuaria.rol === "admin") {
+                    location.href = "admin.html";
+                } else if (datos.usuaria.rol === "profesional") {
+                    location.href = "profesional.html";
+                } else {
+                    // Continuar a la siguiente página
+                    location.href = siguiente();
+                }
 
             } catch (err) {
                 boton.disabled = false;
@@ -218,6 +225,8 @@
             }
         });
     </script>
+
+    <script src="accesibilidad.js"></script>
 
 </body>
 </html>

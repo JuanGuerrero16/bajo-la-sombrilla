@@ -19,10 +19,20 @@ const Sesion = {
     }
   },
 
-  // Guardar el nombre o seudónimo del usuario.
-  set(nombre) {
+  // Guardar los datos básicos de la cuenta (nombre, rol e id).
+  // Acepta un texto por compatibilidad con versiones anteriores.
+  set(usuario) {
     try {
-      localStorage.setItem(KEY, JSON.stringify({ nombre }));
+      const datos =
+        typeof usuario === "string"
+          ? { nombre: usuario }
+          : {
+              nombre: usuario && usuario.nombre,
+              rol: usuario && usuario.rol,
+              id: usuario && usuario.id,
+            };
+
+      localStorage.setItem(KEY, JSON.stringify(datos));
     } catch (e) {
       // No hacer nada si el almacenamiento no está disponible.
     }
@@ -38,11 +48,15 @@ const Sesion = {
   },
 };
 
+// En local se usa el puerto 3000. En producción se usa el mismo dominio
+// desde el que se sirve el sitio (el servidor también sirve la carpeta front).
+// Si el frontend vive en otro dominio, define window.SOMBRILLA_API_URL.
 const API_URL =
-  window.location.hostname === "localhost" ||
+  window.SOMBRILLA_API_URL ||
+  (window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
     ? "http://localhost:3000"
-    : "https://tu-backend-en-railway-o-render.com";
+    : window.location.origin);
 
 // ==========================================
 // REDIRECCIÓN DESPUÉS DE UNA ACCIÓN
@@ -134,7 +148,7 @@ Sesion.sincronizar = async () => {
     const datos = await api("/api/yo");
 
     if (datos.usuaria) {
-      Sesion.set(datos.usuaria.nombre);
+      Sesion.set(datos.usuaria);
     } else {
       Sesion.clear();
     }

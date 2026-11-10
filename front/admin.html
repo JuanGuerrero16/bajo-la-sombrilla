@@ -130,6 +130,87 @@
       #panel form {
         max-width: 520px;
       }
+
+      /* Dashboard de estadísticas */
+      .export-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 0 0 24px;
+      }
+      .chart-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+      .chart-box {
+        min-height: 330px;
+      }
+      .chart-box h3 {
+        margin-bottom: 14px;
+      }
+      .chart-canvas {
+        position: relative;
+        width: 100%;
+        height: 250px;
+      }
+      .chart-canvas canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .dato small {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 2px;
+      }
+      .etq.riesgo {
+        background: #b3361a;
+        color: #fff;
+      }
+      .etq.confirmada {
+        background: #2e7d32;
+        color: #fff;
+      }
+      .etq.completada {
+        background: var(--petrol);
+        color: var(--sand);
+      }
+      .etq.cancelada {
+        background: var(--ink);
+        color: var(--bg);
+      }
+      .admin-form {
+        max-width: none;
+      }
+      .two-col-form {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+      .logro-form {
+        margin-bottom: 24px;
+      }
+      .pro-card .estado {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 700;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #2e7d32;
+        display: inline-block;
+      }
+      .dot.off {
+        background: #b3361a;
+      }
+      .stats-note {
+        margin-top: -10px;
+        margin-bottom: 22px;
+      }
     </style>
   </head>
 
@@ -219,8 +300,16 @@
             <button
               class="btn"
               type="button"
-              data-tab="testi"
+              data-tab="est"
               aria-pressed="true"
+            >
+              📊 ESTADÍSTICAS
+            </button>
+            <button
+              class="btn alt"
+              type="button"
+              data-tab="testi"
+              aria-pressed="false"
             >
               TESTIMONIOS
             </button>
@@ -230,7 +319,39 @@
               data-tab="sol"
               aria-pressed="false"
             >
-              SOLICITUDES DE ORIENTACIÓN
+              SOLICITUDES
+            </button>
+            <button
+              class="btn alt"
+              type="button"
+              data-tab="citas"
+              aria-pressed="false"
+            >
+              CITAS
+            </button>
+            <button
+              class="btn alt"
+              type="button"
+              data-tab="alertas"
+              aria-pressed="false"
+            >
+              ALERTAS
+            </button>
+            <button
+              class="btn alt"
+              type="button"
+              data-tab="prof"
+              aria-pressed="false"
+            >
+              PROFESIONALES
+            </button>
+            <button
+              class="btn alt"
+              type="button"
+              data-tab="logros"
+              aria-pressed="false"
+            >
+              EMPLEOS
             </button>
             <button
               class="btn alt"
@@ -242,8 +363,78 @@
             </button>
           </div>
 
+          <!-- Estadísticas -->
+          <div id="tab-est">
+            <div class="export-row">
+              <button class="btn" type="button" id="expXlsx">
+                DESCARGAR EXCEL
+              </button>
+              <button class="btn alt" type="button" id="expPdf">
+                DESCARGAR PDF
+              </button>
+            </div>
+
+            <p class="notice stats-note">
+              <strong>Progreso promedio:</strong> mide la participación de las
+              usuarias en acompañamiento (citas completadas, diario, tests y
+              mensajería). <strong>Deserción:</strong> usuarias registradas hace
+              más de 60 días sin actividad reciente.
+            </p>
+
+            <div class="chart-grid">
+              <div class="card chart-box">
+                <h3>Citas por mes</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartCitas" aria-label="Gráfica de citas por mes"></canvas>
+                </div>
+              </div>
+
+              <div class="card chart-box">
+                <h3>Tests: riesgo vs. sin riesgo</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartTests" aria-label="Gráfica de tests con y sin riesgo"></canvas>
+                </div>
+              </div>
+
+              <div class="card chart-box">
+                <h3>Promedio de ánimo (30 días)</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartAnimo" aria-label="Gráfica del promedio de ánimo"></canvas>
+                </div>
+              </div>
+
+              <div class="card chart-box">
+                <h3>Usuarias activas e inactivas</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartUsuarias" aria-label="Gráfica de usuarias activas e inactivas"></canvas>
+                </div>
+              </div>
+
+              <div class="card chart-box">
+                <h3>Empleos conseguidos por mes</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartEmpleos" aria-label="Gráfica de empleos conseguidos por mes"></canvas>
+                </div>
+              </div>
+
+              <div class="card chart-box">
+                <h3>Progreso promedio</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartProgreso" aria-label="Gráfica del progreso promedio"></canvas>
+                </div>
+              </div>
+
+              <div class="card chart-box">
+                <h3>Deserción estimada</h3>
+                <div class="chart-canvas">
+                  <canvas id="chartDesercion" aria-label="Gráfica de deserción estimada"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Testimonios -->
-          <div id="tab-testi">
+          <div id="tab-testi" hidden>
             <p class="notice">
               Los testimonios aprobados aparecen en la sección “Voces” de la
               página. Los pendientes solo los ves tú.
@@ -289,6 +480,146 @@
             </div>
 
             <div class="lista" id="listaSol"></div>
+          </div>
+
+          <!-- Citas -->
+          <div id="tab-citas" hidden>
+            <p class="notice">
+              Aquí puedes ver todas las citas del programa. Las profesionales
+              confirman o completan sus citas desde su propio panel.
+            </p>
+
+            <div class="herr">
+              <label for="fCitas">Mostrar:</label>
+              <select id="fCitas">
+                <option value="todas">Todas</option>
+                <option value="pendiente">Pendientes</option>
+                <option value="confirmada">Confirmadas</option>
+                <option value="completada">Completadas</option>
+                <option value="cancelada">Canceladas</option>
+              </select>
+            </div>
+
+            <div class="lista" id="listaCitasAdmin"></div>
+          </div>
+
+          <!-- Alertas -->
+          <div id="tab-alertas" hidden>
+            <p class="notice">
+              Las alertas se generan automáticamente cuando un test de bienestar
+              indica riesgo. Atiéndelas y deja registro de la gestión.
+            </p>
+
+            <div class="herr">
+              <label for="fAlertas">Mostrar:</label>
+              <select id="fAlertas">
+                <option value="pendientes">Pendientes</option>
+                <option value="todas">Todas</option>
+              </select>
+            </div>
+
+            <div class="lista" id="listaAlertasAdmin"></div>
+          </div>
+
+          <!-- Profesionales -->
+          <div id="tab-prof" hidden>
+            <p class="notice">
+              Crea las cuentas del equipo psicosocial. Cada profesional podrá
+              entrar a su panel con el correo y la contraseña que definas aquí.
+            </p>
+
+            <form class="card admin-form" id="fProf" novalidate>
+              <h2>Crear cuenta profesional</h2>
+
+              <div class="two-col-form">
+                <div>
+                  <label for="pNombre">Nombre completo</label>
+                  <input type="text" id="pNombre" autocomplete="off" maxlength="80">
+                </div>
+                <div>
+                  <label for="pEmail">Correo electrónico</label>
+                  <input type="email" id="pEmail" autocomplete="off">
+                </div>
+              </div>
+
+              <div class="two-col-form">
+                <div>
+                  <label for="pClave">
+                    Contraseña
+                    <span class="hint">(mínimo 10 caracteres)</span>
+                  </label>
+                  <input type="password" id="pClave" autocomplete="new-password">
+                </div>
+                <div>
+                  <label for="pEspecialidad">Especialidad</label>
+                  <input type="text" id="pEspecialidad" autocomplete="off" maxlength="120"
+                    placeholder="Psicología, trabajo social, jurídica...">
+                </div>
+              </div>
+
+              <div>
+                <label for="pDescripcion">
+                  Descripción <span class="hint">(opcional)</span>
+                </label>
+                <textarea id="pDescripcion" maxlength="1000"></textarea>
+              </div>
+
+              <div class="err" id="eProf" role="alert"></div>
+
+              <div>
+                <button class="btn" type="submit">CREAR PROFESIONAL</button>
+              </div>
+            </form>
+
+            <p class="ok-msg" id="profMsg" role="status"></p>
+
+            <div class="lista" id="listaProfesionales"></div>
+          </div>
+
+          <!-- Empleos conseguidos -->
+          <div id="tab-logros" hidden>
+            <p class="notice">
+              Registra los empleos conseguidos por las usuarias para que el
+              indicador del dashboard y los reportes reflejen esta información.
+            </p>
+
+            <form class="card admin-form logro-form" id="fLogro" novalidate>
+              <h2>Registrar empleo conseguido</h2>
+
+              <div class="two-col-form">
+                <div>
+                  <label for="logroUsuaria">Usuaria</label>
+                  <select id="logroUsuaria"></select>
+                </div>
+                <div>
+                  <label for="logroEmpresa">Empresa</label>
+                  <input type="text" id="logroEmpresa" maxlength="120" autocomplete="off">
+                </div>
+              </div>
+
+              <div class="two-col-form">
+                <div>
+                  <label for="logroCargo">
+                    Cargo <span class="hint">(opcional)</span>
+                  </label>
+                  <input type="text" id="logroCargo" maxlength="120" autocomplete="off">
+                </div>
+                <div>
+                  <label for="logroFecha">Fecha</label>
+                  <input type="date" id="logroFecha">
+                </div>
+              </div>
+
+              <div class="err" id="eLogro" role="alert"></div>
+
+              <div>
+                <button class="btn" type="submit">REGISTRAR EMPLEO</button>
+              </div>
+            </form>
+
+            <p class="ok-msg" id="logroMsg" role="status"></p>
+
+            <div class="lista" id="listaLogros"></div>
           </div>
 
           <!-- Ajustes -->
@@ -355,25 +686,29 @@
       </div>
     </footer>
 
+    <script src="vendor/chart.umd.min.js"></script>
+
     <script>
       /* =========================================================
        UTILIDADES
        ========================================================= */
       const $ = (id) => document.getElementById(id);
 
+      // En local se usa el puerto 3000. En producción se usa el mismo dominio
+      // desde el que se sirve el sitio. Si el frontend vive en otro dominio,
+      // define window.SOMBRILLA_API_URL antes de este script.
+      const API_URL =
+        window.SOMBRILLA_API_URL ||
+        (window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+          ? "http://localhost:3000"
+          : window.location.origin);
+
       const SIN_CONEXION =
         "No hay conexión con el servidor. Intenta de nuevo en unos minutos.";
 
       // Petición a la API. Si hay error, lanza un Error con el mensaje del servidor.
       async function api(url, opciones = {}) {
-        const API_URL =
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
-            ? "http://localhost:3000"
-            : "https://tu-backend-en-railway-o-render.com";
-
-        console.log(url);
-
         const r = await fetch(API_URL + url, {
           method: opciones.method || "GET",
           headers: opciones.body ? { "Content-Type": "application/json" } : {},
@@ -411,7 +746,24 @@
         );
 
       const fmtFecha = (iso) => {
-        const d = new Date(iso);
+        const txt = String(iso || "");
+        if (!txt) return "";
+
+        // Las fechas "de pared" (citas, logros) no deben correrse de día.
+        if (/^\d{4}-\d{2}-\d{2}$/.test(txt)) {
+          const [anio, mes, dia] = txt.split("-").map(Number);
+          const d = new Date(Date.UTC(anio, mes - 1, dia));
+          return isNaN(d)
+            ? ""
+            : d.toLocaleDateString("es-CO", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                timeZone: "UTC",
+              });
+        }
+
+        const d = new Date(txt);
         return isNaN(d)
           ? ""
           : d.toLocaleDateString("es-CO", {
@@ -419,6 +771,13 @@
               month: "long",
               year: "numeric",
             });
+      };
+
+      // Las marcas de tiempo de la base se guardan en UTC sin la "Z".
+      const fmtFechaUTC = (iso) => {
+        const txt = String(iso || "");
+        if (!txt) return "";
+        return fmtFecha(/Z$/i.test(txt) ? txt : txt + "Z");
       };
 
       const lista = (txt) => (txt ? txt.split(", ") : []);
@@ -503,19 +862,260 @@
             x.classList.toggle("alt", !activo);
             $("tab-" + x.dataset.tab).hidden = !activo;
           });
+
+          if (b.dataset.tab === "est" && EST) {
+            setTimeout(() => pintarGraficas(EST), 30);
+          }
         };
       });
 
       /* =========================================================
        PINTAR EL PANEL
        ========================================================= */
-      async function pintarResumen() {
-        const r = await api("/api/admin/resumen");
+      let EST = null;
+      const graficas = {};
 
-        $("resumen").innerHTML =
-          `<div class="dato"><b>${r.testimoniosPendientes}</b>testimonios por revisar</div>` +
-          `<div class="dato"><b>${r.testimoniosPublicados}</b>testimonios publicados</div>` +
-          `<div class="dato"><b>${r.solicitudesNuevas}</b>solicitudes por atender</div>`;
+      async function cargarEstadisticas() {
+        EST = await api("/api/admin/estadisticas");
+        pintarResumen(EST);
+        pintarGraficas(EST);
+      }
+
+      function pintarResumen(e) {
+        const datos = [
+          [e.usuariasActivas, "usuarias activas", `de ${e.totalUsuarias} registradas`],
+          [e.citasRealizadas, "citas realizadas", `${e.citasPendientes} pendientes`],
+          [e.empleosConseguidos, "empleos conseguidos", "registrados por el equipo"],
+          [e.progresoPromedio + "%", "progreso promedio", "participación en el acompañamiento"],
+          [e.desercion + "%", "deserción estimada", "sin actividad por más de 60 días"],
+          [e.alertasPendientes, "alertas pendientes", `${e.testsRiesgo} tests con riesgo`],
+          [
+            e.promedioAnimo == null ? "Sin datos" : e.promedioAnimo + " / 10",
+            "promedio de ánimo",
+            "últimos 30 días",
+          ],
+          [e.mensajesTotal, "mensajes enviados", `${e.entradasDiario} registros del diario`],
+        ];
+
+        $("resumen").innerHTML = datos
+          .map(
+            ([valor, etiqueta, detalle]) =>
+              `<div class="dato"><b>${valor}</b>${etiqueta}<small>${detalle}</small></div>`,
+          )
+          .join("");
+      }
+
+      function crearGrafica(id, configuracion) {
+        const lienzo = $(id);
+        if (!lienzo) return;
+
+        if (graficas[id]) {
+          graficas[id].destroy();
+          delete graficas[id];
+        }
+
+        if (typeof Chart === "undefined") {
+          const contenedor = lienzo.parentElement;
+          contenedor.innerHTML =
+            '<div class="vacio">No se pudo cargar la librería de gráficas.</div>';
+          return;
+        }
+
+        graficas[id] = new Chart(lienzo, configuracion);
+      }
+
+      function pintarGraficas(e) {
+        if (typeof Chart !== "undefined") {
+          Chart.defaults.font.family =
+            '"Atkinson Hyperlegible", Verdana, sans-serif';
+          Chart.defaults.color = "#2b1810";
+        }
+
+        // Citas por mes: se completan los últimos 6 meses aunque no tengan datos
+        const meses = [];
+        const base = new Date();
+
+        for (let i = 5; i >= 0; i -= 1) {
+          const fecha = new Date(
+            Date.UTC(base.getUTCFullYear(), base.getUTCMonth() - i, 1),
+          );
+          meses.push({
+            clave: fecha.toISOString().slice(0, 7),
+            etiqueta: fecha.toLocaleDateString("es-CO", {
+              month: "short",
+              timeZone: "UTC",
+            }),
+          });
+        }
+
+        const estados = [
+          ["completada", "#4a2260"],
+          ["confirmada", "#2e7d32"],
+          ["pendiente", "#f7b91e"],
+          ["cancelada", "#b3361a"],
+        ];
+
+        crearGrafica("chartCitas", {
+          type: "bar",
+          data: {
+            labels: meses.map((m) => m.etiqueta),
+            datasets: estados.map(([estado, color]) => ({
+              label: estado,
+              backgroundColor: color,
+              borderRadius: 6,
+              data: meses.map((m) => {
+                const fila = e.citasPorMes.find(
+                  (c) => c.mes === m.clave && c.estado === estado,
+                );
+                return fila ? fila.total : 0;
+              }),
+            })),
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+          },
+        });
+
+        const sinRiesgo = Math.max(e.testsTotal - e.testsRiesgo, 0);
+
+        crearGrafica("chartTests", {
+          type: "doughnut",
+          data: {
+            labels: e.testsTotal ? ["Sin riesgo", "Con riesgo"] : ["Sin tests"],
+            datasets: [
+              {
+                data: e.testsTotal ? [sinRiesgo, e.testsRiesgo] : [1],
+                backgroundColor: e.testsTotal
+                  ? ["#2e7d32", "#b3361a"]
+                  : ["#d9c9b8"],
+                borderWidth: 2,
+                borderColor: "#fff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+          },
+        });
+
+        crearGrafica("chartAnimo", {
+          type: "line",
+          data: {
+            labels: e.animoPorDia.map((a) => a.fecha.slice(5)),
+            datasets: [
+              {
+                label: "Promedio de ánimo",
+                data: e.animoPorDia.map((a) => a.promedio),
+                borderColor: "#f28c28",
+                backgroundColor: "rgba(242, 140, 40, 0.18)",
+                fill: true,
+                tension: 0.35,
+                pointBackgroundColor: "#4a2260",
+                pointRadius: 4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { min: 1, max: 10, ticks: { stepSize: 1 } },
+            },
+          },
+        });
+
+        crearGrafica("chartUsuarias", {
+          type: "doughnut",
+          data: {
+            labels: ["Activas", "Inactivas"],
+            datasets: [
+              {
+                data: [e.usuariasActivas, e.usuariasInactivas],
+                backgroundColor: ["#2e7d32", "#d9c9b8"],
+                borderWidth: 2,
+                borderColor: "#fff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+          },
+        });
+
+        crearGrafica("chartEmpleos", {
+          type: "bar",
+          data: {
+            labels: meses.map((m) => m.etiqueta),
+            datasets: [
+              {
+                label: "Empleos conseguidos",
+                data: meses.map((m) => {
+                  const fila = e.logrosPorMes.find((l) => l.mes === m.clave);
+                  return fila ? fila.total : 0;
+                }),
+                backgroundColor: "#f28c28",
+                borderRadius: 6,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+          },
+        });
+
+        const progreso = Math.max(0, Math.min(100, Number(e.progresoPromedio) || 0));
+        const desercion = Math.max(0, Math.min(100, Number(e.desercion) || 0));
+
+        crearGrafica("chartProgreso", {
+          type: "doughnut",
+          data: {
+            labels: ["Progreso", "Por avanzar"],
+            datasets: [
+              {
+                data: [progreso, 100 - progreso],
+                backgroundColor: ["#4a2260", "#e7d9c8"],
+                borderWidth: 2,
+                borderColor: "#fff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+          },
+        });
+
+        crearGrafica("chartDesercion", {
+          type: "doughnut",
+          data: {
+            labels: ["Deserción", "Activas"],
+            datasets: [
+              {
+                data: [desercion, 100 - desercion],
+                backgroundColor: ["#b3361a", "#e7d9c8"],
+                borderWidth: 2,
+                borderColor: "#fff",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+          },
+        });
       }
 
       async function pintarTesti() {
@@ -588,9 +1188,157 @@
           : '<div class="vacio">No hay solicitudes en esta lista.</div>';
       }
 
+      async function pintarCitasAdmin() {
+        const f = $("fCitas").value;
+        const datos = await api("/api/admin/citas");
+        const citas = datos.filter((c) => f === "todas" || c.estado === f);
+
+        $("listaCitasAdmin").innerHTML = citas.length
+          ? citas
+              .map((c) => {
+                const [fecha, hora = ""] = String(c.fecha_hora || "").split("T");
+                const puedeCancelar =
+                  c.estado === "pendiente" || c.estado === "confirmada";
+
+                return `
+            <article class="card">
+                <div class="cab">
+                    <h3>${fmtFecha(fecha)} · ${esc(hora.slice(0, 5))}</h3>
+                    <span class="etq ${esc(c.estado)}">${esc(c.estado)}</span>
+                </div>
+                <p><strong>Usuaria:</strong> ${esc(c.usuaria)}</p>
+                <p><strong>Profesional:</strong> ${esc(c.profesional)}${c.especialidad ? " · " + esc(c.especialidad) : ""}</p>
+                <p><strong>Modalidad:</strong> ${c.modalidad === "virtual" ? "Virtual" : "Presencial"}</p>
+                ${c.motivo ? `<p class="texto">Motivo: ${esc(c.motivo)}</p>` : ""}
+                ${
+                  puedeCancelar
+                    ? `<div class="acciones"><button class="btn sm peligro" data-a="cancelarCita" data-id="${c.id}">CANCELAR CITA</button></div>`
+                    : ""
+                }
+            </article>`;
+              })
+              .join("")
+          : '<div class="vacio">No hay citas en esta lista.</div>';
+      }
+
+      async function pintarAlertasAdmin() {
+        const f = $("fAlertas").value;
+        const datos = await api("/api/admin/alertas");
+        const alertas = datos.filter(
+          (a) => f === "todas" || !a.atendida,
+        );
+
+        $("listaAlertasAdmin").innerHTML = alertas.length
+          ? alertas
+              .map(
+                (a) => `
+            <article class="card">
+                <div class="cab">
+                    <h3>${esc(a.usuaria)}</h3>
+                    <span class="etq riesgo">${esc(a.nivel)}</span>
+                    ${
+                      a.atendida
+                        ? '<span class="etq completada">ATENDIDA</span>'
+                        : '<span class="etq pendiente">PENDIENTE</span>'
+                    }
+                    <span class="fecha">${fmtFechaUTC(a.creado_en)}</span>
+                </div>
+                <p class="texto">${esc(a.descripcion)}</p>
+                <p class="hint">${a.profesional ? "Asignada a " + esc(a.profesional) : "Sin asignar a una profesional"}</p>
+                ${
+                  !a.atendida
+                    ? `<div class="acciones"><button class="btn sm" data-a="atenderAlerta" data-id="${a.id}">MARCAR ATENDIDA</button></div>`
+                    : ""
+                }
+            </article>`,
+              )
+              .join("")
+          : '<div class="vacio">No hay alertas en esta lista.</div>';
+      }
+
+      async function pintarProfesionales() {
+        const datos = await api("/api/admin/profesionales");
+
+        $("listaProfesionales").innerHTML = datos.length
+          ? datos
+              .map(
+                (p) => `
+            <article class="card pro-card">
+                <div class="cab">
+                    <h3>${esc(p.nombre)}</h3>
+                    <span class="estado"><span class="dot ${p.activo ? "" : "off"}"></span>${p.activo ? "Activa" : "Inactiva"}</span>
+                </div>
+                <p><strong>Correo:</strong> ${esc(p.email)}</p>
+                <p><strong>Especialidad:</strong> ${esc(p.especialidad)}</p>
+                ${p.descripcion ? `<p class="texto">${esc(p.descripcion)}</p>` : ""}
+                <div class="acciones">
+                    <button class="btn sm ${p.activo ? "peligro" : ""}" data-a="toggleProf" data-id="${p.id}" data-activo="${p.activo ? "1" : "0"}">
+                        ${p.activo ? "DESACTIVAR" : "ACTIVAR"}
+                    </button>
+                </div>
+            </article>`,
+              )
+              .join("")
+          : '<div class="vacio">Aún no hay cuentas profesionales.</div>';
+      }
+
+      async function pintarLogros() {
+        const datos = await api("/api/admin/logros");
+
+        $("listaLogros").innerHTML = datos.length
+          ? datos
+              .map(
+                (l) => `
+            <article class="card">
+                <div class="cab">
+                    <h3>${esc(l.usuaria)}</h3>
+                    <span class="etq completada">${esc(l.fecha)}</span>
+                </div>
+                <p><strong>Empresa:</strong> ${esc(l.empresa)}</p>
+                ${l.cargo ? `<p><strong>Cargo:</strong> ${esc(l.cargo)}</p>` : ""}
+                <div class="acciones">
+                    <button class="btn sm peligro" data-a="borrarLogro" data-id="${l.id}">ELIMINAR</button>
+                </div>
+            </article>`,
+              )
+              .join("")
+          : '<div class="vacio">Todavía no hay empleos registrados.</div>';
+      }
+
+      async function pintarUsuariasSelect() {
+        const datos = await api("/api/admin/usuarias");
+        const select = $("logroUsuaria");
+        const anterior = select.value;
+
+        select.innerHTML = datos.length
+          ? datos
+              .map(
+                (u) =>
+                  `<option value="${u.id}">${esc(u.nombre)} · ${esc(u.email)}</option>`,
+              )
+              .join("")
+          : '<option value="">No hay usuarias registradas</option>';
+
+        if (anterior) select.value = anterior;
+        if (!$("logroFecha").value) {
+          $("logroFecha").value = new Date(Date.now() - 5 * 60 * 60 * 1000)
+            .toISOString()
+            .slice(0, 10);
+        }
+      }
+
       async function pintarTodo() {
         try {
-          await Promise.all([pintarResumen(), pintarTesti(), pintarSol()]);
+          await Promise.all([
+            cargarEstadisticas(),
+            pintarTesti(),
+            pintarSol(),
+            pintarCitasAdmin(),
+            pintarAlertasAdmin(),
+            pintarProfesionales(),
+            pintarLogros(),
+            pintarUsuariasSelect(),
+          ]);
         } catch (e) {
           manejar(e);
         }
@@ -598,6 +1346,135 @@
 
       $("fTesti").onchange = () => pintarTesti().catch(manejar);
       $("fSol").onchange = () => pintarSol().catch(manejar);
+      $("fCitas").onchange = () => pintarCitasAdmin().catch(manejar);
+      $("fAlertas").onchange = () => pintarAlertasAdmin().catch(manejar);
+
+      /* =========================================================
+       EXPORTACIÓN DE REPORTES
+       ========================================================= */
+      async function descargar(url, nombre) {
+        try {
+          const r = await fetch(API_URL + url, { credentials: "include" });
+
+          if (!r.ok) {
+            let mensaje = "No se pudo generar el reporte.";
+            try {
+              const datos = await r.json();
+              mensaje = datos.error || mensaje;
+            } catch (e) {}
+            throw new Error(mensaje);
+          }
+
+          const blob = await r.blob();
+          const enlace = document.createElement("a");
+          enlace.href = URL.createObjectURL(blob);
+          enlace.download = nombre;
+          document.body.appendChild(enlace);
+          enlace.click();
+          enlace.remove();
+          setTimeout(() => URL.revokeObjectURL(enlace.href), 1500);
+        } catch (e) {
+          alert(e.message || SIN_CONEXION);
+        }
+      }
+
+      $("expXlsx").onclick = () =>
+        descargar(
+          "/api/admin/reportes/estadisticas.xlsx",
+          "reporte-bajo-la-sombrilla.xlsx",
+        );
+
+      $("expPdf").onclick = () =>
+        descargar(
+          "/api/admin/reportes/estadisticas.pdf",
+          "reporte-bajo-la-sombrilla.pdf",
+        );
+
+      /* =========================================================
+       CREAR PROFESIONAL
+       ========================================================= */
+      $("fProf").onsubmit = async (ev) => {
+        ev.preventDefault();
+
+        const error = $("eProf");
+        const mensaje = $("profMsg");
+        error.textContent = "";
+        mensaje.textContent = "";
+
+        const datos = {
+          nombre: $("pNombre").value.trim(),
+          email: $("pEmail").value.trim(),
+          password: $("pClave").value,
+          especialidad: $("pEspecialidad").value.trim(),
+          descripcion: $("pDescripcion").value.trim(),
+        };
+
+        if (!datos.nombre || !datos.email || !datos.password || !datos.especialidad) {
+          error.textContent = "Completa nombre, correo, contraseña y especialidad.";
+          return;
+        }
+
+        if (datos.password.length < 10) {
+          error.textContent = "La contraseña debe tener al menos 10 caracteres.";
+          return;
+        }
+
+        const boton = $("fProf").querySelector('button[type="submit"]');
+        boton.disabled = true;
+
+        try {
+          await api("/api/admin/profesionales", {
+            method: "POST",
+            body: datos,
+          });
+          $("fProf").reset();
+          mensaje.textContent = "Cuenta profesional creada correctamente.";
+          await pintarProfesionales();
+        } catch (e) {
+          error.textContent = e.status ? e.message : SIN_CONEXION;
+        } finally {
+          boton.disabled = false;
+        }
+      };
+
+      /* =========================================================
+       REGISTRAR EMPLEO CONSEGUIDO
+       ========================================================= */
+      $("fLogro").onsubmit = async (ev) => {
+        ev.preventDefault();
+
+        const error = $("eLogro");
+        const mensaje = $("logroMsg");
+        error.textContent = "";
+        mensaje.textContent = "";
+
+        const datos = {
+          usuaria_id: $("logroUsuaria").value,
+          empresa: $("logroEmpresa").value.trim(),
+          cargo: $("logroCargo").value.trim(),
+          fecha: $("logroFecha").value,
+        };
+
+        if (!datos.usuaria_id || !datos.empresa) {
+          error.textContent = "Elige una usuaria y escribe la empresa.";
+          return;
+        }
+
+        const boton = $("fLogro").querySelector('button[type="submit"]');
+        boton.disabled = true;
+
+        try {
+          await api("/api/admin/logros", { method: "POST", body: datos });
+          $("logroEmpresa").value = "";
+          $("logroCargo").value = "";
+          mensaje.textContent = "Empleo registrado correctamente.";
+          await Promise.all([pintarLogros(), cargarEstadisticas()]);
+        } catch (e) {
+          error.textContent = e.status ? e.message : SIN_CONEXION;
+        } finally {
+          boton.disabled = false;
+        }
+      };
 
       /* =========================================================
        ACCIONES
@@ -630,6 +1507,24 @@
               body: { estado: "nueva" },
             });
 
+          if (a === "cancelarCita") {
+            if (!confirm("¿Cancelar esta cita?")) return;
+            await api("/api/admin/citas/" + id, {
+              method: "PATCH",
+              body: { estado: "cancelada" },
+            });
+          }
+          if (a === "atenderAlerta")
+            await api("/api/admin/alertas/" + id, {
+              method: "PATCH",
+              body: { atendida: true },
+            });
+          if (a === "toggleProf")
+            await api("/api/admin/profesionales/" + id, {
+              method: "PATCH",
+              body: { activo: b.dataset.activo !== "1" },
+            });
+
           if (a === "borrarT") {
             if (!confirm("¿Eliminar este testimonio de forma definitiva?"))
               return;
@@ -639,6 +1534,10 @@
             if (!confirm("¿Eliminar esta solicitud de forma definitiva?"))
               return;
             await api("/api/admin/solicitudes/" + id, { method: "DELETE" });
+          }
+          if (a === "borrarLogro") {
+            if (!confirm("¿Eliminar este registro de empleo?")) return;
+            await api("/api/admin/logros/" + id, { method: "DELETE" });
           }
         } catch (err) {
           return manejar(err);
@@ -692,5 +1591,6 @@
         verAcceso();
       })();
     </script>
+    <script src="accesibilidad.js"></script>
   </body>
 </html>

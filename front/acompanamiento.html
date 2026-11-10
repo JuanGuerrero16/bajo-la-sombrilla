@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Acompañamiento psicosocial · Bajo la sombrilla</title>
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="page-module">
+
+    <a class="skip" href="#main">Saltar al contenido</a>
+
+    <!-- ==================== ENCABEZADO ==================== -->
+    <header>
+        <div class="wrap nav">
+            <a class="logo" href="Bajo_la_sombrilla.html" aria-label="Bajo la sombrilla, inicio">
+                <img class="logo-img" src="logo_3_transparente.png" alt="" width="46" height="39">
+                BAJO LA SOMBRILLA
+            </a>
+
+            <nav class="menu" aria-label="Principal">
+                <a href="Bajo_la_sombrilla.html">Inicio</a>
+                <a href="acompanamiento.html" aria-current="page">Acompañamiento</a>
+                <a href="mapa.html">Mapa de servicios</a>
+                <a href="Bajo_la_sombrilla.html#voces">Voces</a>
+            </nav>
+
+            <span class="session-name" id="nombreSesion" hidden></span>
+
+            <button class="btn sm alt" id="salir" type="button" hidden>
+                CERRAR SESIÓN
+            </button>
+
+            <button class="icon-btn burger" id="burger" aria-expanded="false" aria-controls="mm" aria-label="Abrir menú">
+                ☰ Menú
+            </button>
+        </div>
+
+        <nav id="mm" aria-label="Menú móvil">
+            <a href="Bajo_la_sombrilla.html">Inicio</a>
+            <a href="acompanamiento.html">Acompañamiento</a>
+            <a href="mapa.html">Mapa de servicios</a>
+            <a href="Bajo_la_sombrilla.html#voces">Voces</a>
+        </nav>
+    </header>
+
+    <main id="main">
+
+        <!-- ==================== PRESENTACIÓN ==================== -->
+        <section class="module-hero">
+            <div class="wrap">
+                <p class="eyebrow">MÓDULO DE ACOMPAÑAMIENTO PSICOSOCIAL</p>
+                <h1>Un espacio para sentirte acompañada</h1>
+                <p class="intro">
+                    Agenda citas con profesionales, conversa por mensajería interna,
+                    registra cómo te sientes, realiza test de bienestar y accede a
+                    líneas de ayuda cuando lo necesites.
+                </p>
+                <p class="notice">
+                    Este espacio complementa la atención profesional y no reemplaza
+                    una consulta de urgencia. Si estás en peligro inmediato, llama
+                    al <strong>123</strong> o usa el botón de ayuda.
+                </p>
+            </div>
+        </section>
+
+        <!-- ==================== SIN SESIÓN ==================== -->
+        <section id="sinSesion" class="wrap module-narrow" hidden>
+            <div class="card">
+                <div class="ico" aria-hidden="true">🔐</div>
+                <h2>Inicia sesión para entrar al módulo</h2>
+                <p>
+                    Para proteger tus citas, mensajes y registros emocionales,
+                    necesitas una cuenta. Tus datos solo son visibles para ti y
+                    para las profesionales que te acompañan.
+                </p>
+                <div class="row">
+                    <a class="btn" href="login.html?next=acompanamiento.html">INICIAR SESIÓN</a>
+                    <a class="btn alt" href="registro.html?next=acompanamiento.html">CREAR CUENTA</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MÓDULO ==================== -->
+        <section id="modulo" class="wrap" hidden>
+
+            <div class="tabs module-tabs" role="group" aria-label="Secciones del módulo">
+                <button class="btn" type="button" data-tab="citas" aria-pressed="true">
+                    📅 CITAS
+                </button>
+                <button class="btn alt" type="button" data-tab="chat" aria-pressed="false">
+                    💬 MENSAJES
+                </button>
+                <button class="btn alt" type="button" data-tab="diario" aria-pressed="false">
+                    🌤️ DIARIO EMOCIONAL
+                </button>
+                <button class="btn alt" type="button" data-tab="tests" aria-pressed="false">
+                    📋 TEST DE BIENESTAR
+                </button>
+                <button class="btn alt" type="button" data-tab="ayuda" aria-pressed="false">
+                    🆘 AYUDA
+                </button>
+            </div>
+
+            <p class="ok-msg" id="avisoModulo" role="status" aria-live="polite"></p>
+
+            <!-- ==================== CITAS ==================== -->
+            <div id="tab-citas" class="tab-panel">
+                <div class="section-head">
+                    <div>
+                        <h2>Agenda una cita</h2>
+                        <p class="intro">
+                            Elige una profesional, revisa su disponibilidad y reserva
+                            el horario que mejor te sirva. La cita queda pendiente
+                            hasta que la profesional la confirme.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid" id="profesionales" aria-live="polite"></div>
+
+                <!-- Formulario de agendamiento -->
+                <div class="card agenda-card" id="agenda" hidden>
+                    <div class="cab">
+                        <div>
+                            <p class="eyebrow">AGENDAR CON</p>
+                            <h3 id="agendaProfesional">Profesional</h3>
+                        </div>
+                        <button class="btn sm alt" type="button" id="cerrarAgenda">
+                            CAMBIAR DE PROFESIONAL
+                        </button>
+                    </div>
+
+                    <p class="hint" id="agendaEspecialidad"></p>
+
+                    <div class="calendar-block">
+                        <h4>1. Elige el día</h4>
+                        <div class="date-grid" id="fechas" role="group" aria-label="Días disponibles"></div>
+                        <p class="hint" id="sinFechas" hidden>
+                            Esta profesional no tiene cupos disponibles en los próximos días.
+                        </p>
+                    </div>
+
+                    <div class="calendar-block">
+                        <h4>2. Elige la hora</h4>
+                        <div class="time-grid" id="horas" role="group" aria-label="Horas disponibles"></div>
+                        <p class="hint" id="sinHoras">Primero elige un día.</p>
+                    </div>
+
+                    <form id="formCita" novalidate>
+                        <div class="two-cols">
+                            <div>
+                                <label for="modalidad">Modalidad</label>
+                                <select id="modalidad">
+                                    <option value="virtual">Virtual</option>
+                                    <option value="presencial">Presencial</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="motivo">
+                                    Motivo
+                                    <span class="hint">(opcional)</span>
+                                </label>
+                                <input type="text" id="motivo" maxlength="500" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="err" id="errCita" role="alert"></div>
+                        <div class="row">
+                            <button class="btn" type="submit" id="btnAgendar" disabled>
+                                SOLICITAR CITA
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="section-head spaced">
+                    <h2>Mis citas</h2>
+                </div>
+                <div class="lista" id="misCitas" aria-live="polite"></div>
+            </div>
+
+            <!-- ==================== CHAT ==================== -->
+            <div id="tab-chat" class="tab-panel" hidden>
+                <div class="section-head">
+                    <div>
+                        <h2>Mensajes con profesionales</h2>
+                        <p class="intro">
+                            Escribe tus dudas o cuéntale a la profesional cómo vas.
+                            También tienes un chat de prueba con respuestas automáticas
+                            para practicar.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="chat-layout">
+                    <div class="chat-list">
+                        <h3>Conversaciones</h3>
+                        <div id="conversaciones" aria-live="polite"></div>
+                    </div>
+
+                    <div class="chat-window" id="chatVentana">
+                        <div class="chat-head" id="chatHead">
+                            <div>
+                                <h3 id="chatNombre">Elige una conversación</h3>
+                                <p class="hint" id="chatEspecialidad"></p>
+                            </div>
+                            <button
+                                class="btn sm alt"
+                                type="button"
+                                id="reiniciarChatPrueba"
+                                hidden
+                            >
+                                REINICIAR CHAT DE PRUEBA
+                            </button>
+                        </div>
+
+                        <div class="chat-messages" id="mensajes" aria-live="polite">
+                            <p class="vacio">Selecciona una profesional para comenzar.</p>
+                        </div>
+
+                        <form class="chat-form" id="formMensaje" novalidate>
+                            <label class="sr" for="textoMensaje">Escribe un mensaje</label>
+                            <textarea id="textoMensaje" maxlength="2000" placeholder="Escribe tu mensaje..." disabled></textarea>
+                            <button class="btn" type="submit" id="btnEnviarMensaje" disabled>
+                                ENVIAR
+                            </button>
+                        </form>
+                        <div class="err" id="errMensaje" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== DIARIO ==================== -->
+            <div id="tab-diario" class="tab-panel" hidden>
+                <div class="section-head">
+                    <div>
+                        <h2>Diario emocional</h2>
+                        <p class="intro">
+                            Registra cómo te sientes hoy. Puedes volver a guardar el
+                            mismo día para actualizar tu registro. La gráfica muestra
+                            tu evolución de los últimos 30 días.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="diario-layout">
+                    <form class="card" id="formDiario" novalidate>
+                        <h3>¿Cómo te sientes hoy?</h3>
+
+                        <div class="mood-picker" id="moodPicker" role="group" aria-label="Estado de ánimo del 1 al 10">
+                            <!-- Se genera con JavaScript -->
+                        </div>
+
+                        <p class="mood-output" id="moodOutput" aria-live="polite">
+                            Elige un número del 1 al 10.
+                        </p>
+
+                        <fieldset>
+                            <legend>¿Qué emociones aparecen? <span class="hint">(opcional)</span></legend>
+                            <div class="opts" id="emociones"></div>
+                        </fieldset>
+
+                        <div>
+                            <label for="notaDiario">
+                                Nota del día <span class="hint">(opcional)</span>
+                            </label>
+                            <textarea id="notaDiario" maxlength="1000" placeholder="¿Qué pasó hoy? ¿Qué necesitas?"></textarea>
+                        </div>
+
+                        <div class="err" id="errDiario" role="alert"></div>
+
+                        <div>
+                            <button class="btn" type="submit">GUARDAR REGISTRO DE HOY</button>
+                        </div>
+                    </form>
+
+                    <div class="card chart-card">
+                        <div class="cab">
+                            <h3>Evolución del ánimo</h3>
+                            <span class="etq" id="promedioAnimo">Sin datos</span>
+                        </div>
+                        <div class="chart-wrap">
+                            <canvas id="graficoAnimo" width="640" height="300" role="img"
+                                aria-label="Gráfica de evolución del estado de ánimo de los últimos 30 días"></canvas>
+                        </div>
+                        <p class="hint">El eje vertical va de 1 (muy bajo) a 10 (muy bien).</p>
+                    </div>
+                </div>
+
+                <div class="section-head spaced">
+                    <h2>Registros recientes</h2>
+                </div>
+                <div class="lista" id="entradasDiario" aria-live="polite"></div>
+            </div>
+
+            <!-- ==================== TESTS ==================== -->
+            <div id="tab-tests" class="tab-panel" hidden>
+                <div class="section-head">
+                    <div>
+                        <h2>Test de bienestar</h2>
+                        <p class="intro">
+                            Estos cuestionarios son breves y te ayudan a reconocer
+                            cómo estás. Si tus respuestas indican riesgo, se genera
+                            una alerta para el equipo profesional.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid" id="testsDisponibles" aria-live="polite"></div>
+
+                <div class="card questionnaire" id="cuestionario" hidden>
+                    <div class="cab">
+                        <div>
+                            <p class="eyebrow">CUESTIONARIO</p>
+                            <h3 id="testTitulo"></h3>
+                        </div>
+                        <button class="btn sm alt" type="button" id="cerrarTest">
+                            CANCELAR
+                        </button>
+                    </div>
+                    <p id="testInstruccion"></p>
+                    <form id="formTest" novalidate>
+                        <div id="preguntasTest"></div>
+                        <div class="err" id="errTest" role="alert"></div>
+                        <div class="row">
+                            <button class="btn" type="submit">VER MI RESULTADO</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card result-card" id="resultadoTest" hidden role="status" tabindex="-1">
+                    <h3 id="resultadoTitulo"></h3>
+                    <p class="result-score" id="resultadoPuntaje"></p>
+                    <p id="resultadoNivel"></p>
+                    <p id="resultadoRecomendacion"></p>
+                    <div class="row">
+                        <button class="btn" type="button" id="resultadoAyuda">
+                            NECESITO AYUDA AHORA
+                        </button>
+                        <button class="btn alt" type="button" id="resultadoCerrar">
+                            ENTENDIDO
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section-head spaced">
+                    <h2>Mis resultados anteriores</h2>
+                </div>
+                <div class="lista" id="historialTests" aria-live="polite"></div>
+            </div>
+
+            <!-- ==================== AYUDA ==================== -->
+            <div id="tab-ayuda" class="tab-panel" hidden>
+                <div class="emergency-card">
+                    <div>
+                        <p class="eyebrow">AYUDA INMEDIATA</p>
+                        <h2>Si estás en peligro o necesitas apoyo urgente</h2>
+                        <p>
+                            Llama a una de las líneas de atención. Son gratuitas y
+                            puedes comunicarte las 24 horas.
+                        </p>
+                    </div>
+                    <button class="btn emergency-btn" type="button" id="abrirAyuda">
+                        🆘 VER LÍNEAS DE ATENCIÓN
+                    </button>
+                </div>
+
+                <div class="section-head spaced">
+                    <h2>Líneas de atención</h2>
+                </div>
+                <div class="grid" id="lineasAyuda" aria-live="polite"></div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- ==================== PIE DE PÁGINA ==================== -->
+    <footer>
+        <div class="wrap">
+            <h2>BAJO LA SOMBRILLA</h2>
+            <p>
+                Un espacio para mujeres que construyen nuevos caminos después de
+                las rejas.
+            </p>
+            <p><strong>Proyecto académico de Terapia Ocupacional</strong></p>
+            <nav aria-label="Pie de página">
+                <ul>
+                    <li><a href="Bajo_la_sombrilla.html">Inicio</a></li>
+                    <li><a href="acompanamiento.html">Acompañamiento</a></li>
+                    <li><a href="mapa.html">Mapa de servicios</a></li>
+                    <li><a href="admin.html">Administración</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Botón flotante de emergencia -->
+    <button class="emergency-fab" id="btnEmergencia" type="button" aria-haspopup="dialog">
+        🆘 Ayuda
+    </button>
+
+    <!-- Modal de líneas de ayuda -->
+    <div class="modal" id="modalAyuda" role="dialog" aria-modal="true" aria-labelledby="modalAyudaTitulo" hidden>
+        <div class="modal-box">
+            <button class="modal-close" id="cerrarAyuda" type="button" aria-label="Cerrar">
+                ✕
+            </button>
+            <h2 id="modalAyudaTitulo">Líneas de atención</h2>
+            <p>Si estás en peligro inmediato llama al <strong>123</strong>.</p>
+            <div id="lineasModal" class="emergency-lines"></div>
+            <p class="hint">
+                También puedes llamar a la Línea 155 (mujeres) o a la Línea 106
+                (salud mental). La llamada es gratuita.
+            </p>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="acompanamiento.js"></script>
+    <script src="accesibilidad.js"></script>
+</body>
+
+</html>

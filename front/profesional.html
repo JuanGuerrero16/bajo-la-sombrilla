@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Panel profesional · Bajo la sombrilla</title>
+
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800&display=swap"
+    >
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="page-module">
+
+    <a class="skip" href="#main">Saltar al contenido</a>
+
+    <header>
+        <div class="wrap nav">
+            <a class="logo" href="Bajo_la_sombrilla.html" aria-label="Bajo la sombrilla, inicio">
+                <img class="logo-img" src="logo_3_transparente.png" alt="" width="46" height="39">
+                BAJO LA SOMBRILLA
+            </a>
+
+            <nav class="menu" aria-label="Principal">
+                <a href="Bajo_la_sombrilla.html">Inicio</a>
+                <a href="acompanamiento.html">Módulo de acompañamiento</a>
+                <a href="mapa.html">Mapa de servicios</a>
+            </nav>
+
+            <span class="session-name" id="nombreSesion" hidden></span>
+
+            <button class="btn sm alt" id="salir" type="button" hidden>
+                CERRAR SESIÓN
+            </button>
+        </div>
+    </header>
+
+    <main id="main">
+
+        <section id="sinSesion" class="wrap module-narrow" hidden>
+            <div class="card">
+                <div class="ico" aria-hidden="true">🔐</div>
+                <h1>Acceso del equipo profesional</h1>
+                <p>
+                    Este panel es para psicólogas, trabajadoras sociales, abogadas y
+                    orientadoras que acompañan a las usuarias.
+                </p>
+                <div class="row">
+                    <a class="btn" href="login.html?next=profesional.html">INICIAR SESIÓN</a>
+                    <a class="btn alt" href="Bajo_la_sombrilla.html">VOLVER AL INICIO</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="panelProfesional" class="wrap" hidden>
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">EQUIPO DE ACOMPAÑAMIENTO</p>
+                    <h1>Panel profesional</h1>
+                    <p class="intro">
+                        Gestiona tus citas, responde mensajes, revisa las alertas de
+                        riesgo y ajusta tus horarios de atención.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tabs" role="group" aria-label="Secciones del panel profesional">
+                <button class="btn" type="button" data-tab="citas" aria-pressed="true">
+                    📅 MIS CITAS
+                </button>
+                <button class="btn alt" type="button" data-tab="chat" aria-pressed="false">
+                    💬 MENSAJES
+                </button>
+                <button class="btn alt" type="button" data-tab="alertas" aria-pressed="false">
+                    🚨 ALERTAS
+                </button>
+                <button class="btn alt" type="button" data-tab="dispo" aria-pressed="false">
+                    ⏰ DISPONIBILIDAD
+                </button>
+            </div>
+
+            <p class="ok-msg" id="avisoProfesional" role="status" aria-live="polite"></p>
+
+            <!-- CITAS -->
+            <div id="tab-citas" class="tab-panel">
+                <div class="herr">
+                    <label for="filtroCitas">Mostrar:</label>
+                    <select id="filtroCitas">
+                        <option value="todas">Todas</option>
+                        <option value="pendiente">Pendientes</option>
+                        <option value="confirmada">Confirmadas</option>
+                        <option value="completada">Completadas</option>
+                        <option value="cancelada">Canceladas</option>
+                    </select>
+                </div>
+                <div class="lista" id="listaCitas" aria-live="polite"></div>
+            </div>
+
+            <!-- MENSAJES -->
+            <div id="tab-chat" class="tab-panel" hidden>
+                <div class="chat-layout">
+                    <div class="chat-list">
+                        <h3>Conversaciones</h3>
+                        <div id="conversacionesProf" aria-live="polite"></div>
+                    </div>
+
+                    <div class="chat-window">
+                        <div class="chat-head">
+                            <div>
+                                <h3 id="chatUsuaria">Elige una conversación</h3>
+                                <p class="hint" id="chatUsuariaInfo"></p>
+                            </div>
+                        </div>
+
+                        <div class="chat-messages" id="mensajesProf" aria-live="polite">
+                            <p class="vacio">Selecciona una usuaria para conversar.</p>
+                        </div>
+
+                        <form class="chat-form" id="formMensajeProf" novalidate>
+                            <label class="sr" for="textoProf">Escribe un mensaje</label>
+                            <textarea id="textoProf" maxlength="2000" placeholder="Escribe tu respuesta..." disabled></textarea>
+                            <button class="btn" type="submit" id="btnEnviarProf" disabled>
+                                ENVIAR
+                            </button>
+                        </form>
+                        <div class="err" id="errMensajeProf" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALERTAS -->
+            <div id="tab-alertas" class="tab-panel" hidden>
+                <p class="notice">
+                    Las alertas se generan cuando un test de bienestar o un registro
+                    emocional indica riesgo. Atiéndelas lo antes posible.
+                </p>
+                <div class="lista" id="listaAlertas" aria-live="polite"></div>
+            </div>
+
+            <!-- DISPONIBILIDAD -->
+            <div id="tab-dispo" class="tab-panel" hidden>
+                <p class="notice">
+                    Define los días y las horas en que puedes recibir citas. Las
+                    usuarias solo podrán reservar dentro de estos horarios.
+                </p>
+
+                <div class="two-cols">
+                    <form class="card" id="formDispo" novalidate>
+                        <h2>Horario semanal</h2>
+
+                        <fieldset>
+                            <legend>Días de atención</legend>
+                            <div class="opts" id="diasDispo"></div>
+                        </fieldset>
+
+                        <div class="two-cols">
+                            <div>
+                                <label for="horaInicio">Hora de inicio</label>
+                                <input type="time" id="horaInicio" value="09:00" required>
+                            </div>
+                            <div>
+                                <label for="horaFin">Hora de fin</label>
+                                <input type="time" id="horaFin" value="17:00" required>
+                            </div>
+                        </div>
+
+                        <div class="err" id="errDispo" role="alert"></div>
+
+                        <div>
+                            <button class="btn" type="submit">GUARDAR DISPONIBILIDAD</button>
+                        </div>
+                    </form>
+
+                    <div class="card">
+                        <h2>Horario actual</h2>
+                        <div id="rangosDispo" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <h2>BAJO LA SOMBRILLA</h2>
+            <p>
+                Un espacio para mujeres que construyen nuevos caminos después de
+                las rejas.
+            </p>
+            <p><strong>Proyecto académico de Terapia Ocupacional</strong></p>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="profesional.js"></script>
+    <script src="accesibilidad.js"></script>
+</body>
+
+</html>
